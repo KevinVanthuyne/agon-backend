@@ -6,11 +6,11 @@ import javax.persistence.Id;
 @Entity(name = "users")
 public class User {
     @Id
-    private long discordId;
+    private long id;
     private String name;
 
-    public User(int discordId, String name) {
-        this.discordId = discordId;
+    public User(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -18,12 +18,12 @@ public class User {
         this(-1, "");
     }
 
-    public long getDiscordId() {
-        return discordId;
+    public long getId() {
+        return id;
     }
 
-    public void setDiscordId(long discordId) {
-        this.discordId = discordId;
+    public void setId(long discordId) {
+        this.id = discordId;
     }
 
     public String getName() {

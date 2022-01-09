@@ -2,12 +2,13 @@ package com.kevinvanthuyne.scored_backend.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "scores")
 public class Score {
     @Id
     @GeneratedValue
-    private int id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -29,7 +30,59 @@ public class Score {
         this.timestamp = timestamp;
     }
 
+    public Score(long score, String scoreImageUrl, User user, Game game) {
+        this(score, scoreImageUrl, user, game, LocalDateTime.now());
+    }
+
     public Score() {
         this(0, "", new User(), new Game(), LocalDateTime.now());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
+    }
+
+    public String getScoreImageUrl() {
+        return scoreImageUrl;
+    }
+
+    public void setScoreImageUrl(String scoreImageUrl) {
+        this.scoreImageUrl = scoreImageUrl;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
