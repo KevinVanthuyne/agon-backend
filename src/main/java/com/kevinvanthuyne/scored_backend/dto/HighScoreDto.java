@@ -1,5 +1,7 @@
 package com.kevinvanthuyne.scored_backend.dto;
 
+import com.kevinvanthuyne.scored_backend.model.HighScore;
+
 public class HighScoreDto {
     private final int rank;
     private final String username;
@@ -11,6 +13,15 @@ public class HighScoreDto {
         this.username = username;
         this.userId = userId;
         this.score = score;
+    }
+
+    public HighScoreDto(HighScore highScore) {
+        this(
+                highScore.getRank(),
+                highScore.getScore().getUser().getName(),
+                highScore.getScore().getUser().getId(),
+                highScore.getScore().getScore()
+        );
     }
 
     public int getRank() {

@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/v1/scores")
@@ -35,9 +35,19 @@ public class ScoreController {
         this.gameService = gameService;
     }
 
-    @GetMapping(path = "/ranking")
-    public List<HighScoreDto> getAllScores() {
-        return new ArrayList<>();
+    @GetMapping(path = "/{gameId}/ranking")
+    public ResponseEntity<List<HighScoreDto>> getAllScores(@PathVariable int gameId) {
+        Optional<Game> gameOpt = gameService.getGame(gameId);
+        if (gameOpt.isEmpty()) {
+            LOGGER.info("Could not find game id {}", gameId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<HighScoreDto> highScores = scoreService.getRanking(gameOpt.get()).stream()
+                .map(HighScoreDto::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.of(Optional.of(highScores));
     }
 
     @PostMapping
@@ -57,7 +67,7 @@ public class ScoreController {
             userOpt = Optional.of(user);
         }
 
-        Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get()); // Retrieve before saving to know previous highest score
+        Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), gameOpt.get()); // Retrieve before saving to know previous highest score
 
         Score score = scoreService.addScore(new Score(scoreDto.getScore(), scoreDto.getScoreImageUrl(), userOpt.get(), gameOpt.get()));
         LOGGER.info("Score added: {}", score);

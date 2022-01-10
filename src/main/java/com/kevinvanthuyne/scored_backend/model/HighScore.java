@@ -1,12 +1,16 @@
 package com.kevinvanthuyne.scored_backend.model;
 
-public class Highscore {
+public class HighScore {
     private int rank;
     private Score score;
 
-    public Highscore(int rank, Score score) {
+    public HighScore(int rank, Score score) {
         this.rank = rank;
         this.score = score;
+    }
+
+    public HighScore(Score score) {
+        this(-1, score);
     }
 
     public int getRank() {
