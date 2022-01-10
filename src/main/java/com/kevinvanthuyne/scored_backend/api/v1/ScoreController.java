@@ -1,6 +1,8 @@
 package com.kevinvanthuyne.scored_backend.api.v1;
 
+import com.kevinvanthuyne.scored_backend.dto.HighScoreDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreDto;
+import com.kevinvanthuyne.scored_backend.dto.ScorePostedDto;
 import com.kevinvanthuyne.scored_backend.model.Game;
 import com.kevinvanthuyne.scored_backend.model.Score;
 import com.kevinvanthuyne.scored_backend.model.User;
@@ -33,13 +35,13 @@ public class ScoreController {
         this.gameService = gameService;
     }
 
-    @GetMapping
-    public List<ScoreDto> getAllScores() {
+    @GetMapping(path = "/ranking")
+    public List<HighScoreDto> getAllScores() {
         return new ArrayList<>();
     }
 
     @PostMapping
-    public ResponseEntity<Score> addNewScore(@RequestBody ScoreDto scoreDto) {
+    public ResponseEntity<ScorePostedDto> addNewScore(@RequestBody ScoreDto scoreDto) {
         LOGGER.info("New score received: {}", scoreDto);
 
         Optional<Game> gameOpt = gameService.getGame(scoreDto.getGameId());
@@ -55,9 +57,20 @@ public class ScoreController {
             userOpt = Optional.of(user);
         }
 
+        Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get()); // Retrieve before saving to know previous highest score
+
         Score score = scoreService.addScore(new Score(scoreDto.getScore(), scoreDto.getScoreImageUrl(), userOpt.get(), gameOpt.get()));
         LOGGER.info("Score added: {}", score);
 
-        return ResponseEntity.of(Optional.of(score));
+        long scoreDelta;
+        if (highestScore.isEmpty()) {
+            scoreDelta = score.getScore();
+        } else {
+            scoreDelta = score.getScore() - highestScore.get().getScore();
+        }
+
+        ScorePostedDto scorePostedDto = new ScorePostedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank
+
+        return ResponseEntity.of(Optional.of(scorePostedDto));
     }
 }
