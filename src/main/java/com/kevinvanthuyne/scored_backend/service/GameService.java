@@ -18,4 +18,8 @@ public class GameService {
     public Optional<Game> getGame(int id) {
         return gameDao.findById(id);
     }
+
+    public Game addGame(Game game) {
+        return gameDao.save(game);
+    }
 }

@@ -1,8 +1,8 @@
 package com.kevinvanthuyne.scored_backend.api.v1;
 
 import com.kevinvanthuyne.scored_backend.dto.HighScoreDto;
+import com.kevinvanthuyne.scored_backend.dto.ScoreAddedDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreDto;
-import com.kevinvanthuyne.scored_backend.dto.ScorePostedDto;
 import com.kevinvanthuyne.scored_backend.model.Game;
 import com.kevinvanthuyne.scored_backend.model.Score;
 import com.kevinvanthuyne.scored_backend.model.User;
@@ -51,7 +51,7 @@ public class ScoreController {
     }
 
     @PostMapping
-    public ResponseEntity<ScorePostedDto> addNewScore(@RequestBody ScoreDto scoreDto) {
+    public ResponseEntity<ScoreAddedDto> addNewScore(@RequestBody ScoreDto scoreDto) {
         LOGGER.info("New score received: {}", scoreDto);
 
         Optional<Game> gameOpt = gameService.getGame(scoreDto.getGameId());
@@ -79,8 +79,8 @@ public class ScoreController {
             scoreDelta = score.getPoints() - highestScore.get().getPoints();
         }
 
-        ScorePostedDto scorePostedDto = new ScorePostedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank
+        ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank
 
-        return ResponseEntity.of(Optional.of(scorePostedDto));
+        return ResponseEntity.of(Optional.of(scoreAddedDto));
     }
 }

@@ -16,8 +16,12 @@ public class Game {
         this.name = name;
     }
 
+    public Game(String name) {
+        this(-1, name);
+    }
+
     public Game() {
-        this(-1, "");
+        this("");
     }
 
     public int getId() {
@@ -34,5 +38,13 @@ public class Game {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

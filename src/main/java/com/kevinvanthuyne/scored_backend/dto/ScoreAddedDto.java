@@ -2,13 +2,13 @@ package com.kevinvanthuyne.scored_backend.dto;
 
 import java.time.LocalDateTime;
 
-public class ScorePostedDto {
+public class ScoreAddedDto {
     private final ScoreDto score;
     private final long scoreDelta;
     private final int rank;
     private final LocalDateTime timestamp;
 
-    public ScorePostedDto(ScoreDto score, long scoreDelta, int rank, LocalDateTime timestamp) {
+    public ScoreAddedDto(ScoreDto score, long scoreDelta, int rank, LocalDateTime timestamp) {
         this.score = score;
         this.scoreDelta = scoreDelta;
         this.rank = rank;
