@@ -41,7 +41,7 @@ public class ScoreService {
             highestScore.ifPresent(score -> highScores.add(new HighScore(score)));
         }
 
-        highScores.sort(Comparator.comparingLong(h -> h.getScore().getScore()));
+        highScores.sort(Comparator.comparingLong((HighScore h) -> h.getScore().getScore()).reversed());
 
         for (int i = 0; i < highScores.size(); i++) {
             highScores.get(i).setRank(i + 1);
