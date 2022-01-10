@@ -4,6 +4,7 @@ import com.kevinvanthuyne.scored_backend.dao.GameDao;
 import com.kevinvanthuyne.scored_backend.model.Game;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,9 @@ public class GameService {
 
     public Game addGame(Game game) {
         return gameDao.save(game);
+    }
+
+    public List<Game> getAll() {
+        return gameDao.findAll();
     }
 }

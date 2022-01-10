@@ -47,7 +47,7 @@ public class ScoreController {
                 .map(HighScoreDto::new)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.of(Optional.of(highScores));
+        return ResponseEntity.ok(highScores);
     }
 
     @PostMapping
@@ -81,6 +81,6 @@ public class ScoreController {
 
         ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank
 
-        return ResponseEntity.of(Optional.of(scoreAddedDto));
+        return ResponseEntity.ok(scoreAddedDto);
     }
 }
