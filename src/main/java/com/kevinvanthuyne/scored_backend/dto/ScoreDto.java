@@ -1,15 +1,15 @@
 package com.kevinvanthuyne.scored_backend.dto;
 
 public class ScoreDto {
-    private final long score;
+    private final long points;
     private final String scoreImageUrl;
     private final long userId;
     private final String username;
     private final String gameInitials;
     private final int gameId;
 
-    public ScoreDto(long score, String scoreImageUrl, long userId, String username, String gameInitials, int gameId) {
-        this.score = score;
+    public ScoreDto(long points, String scoreImageUrl, long userId, String username, String gameInitials, int gameId) {
+        this.points = points;
         this.scoreImageUrl = scoreImageUrl;
         this.userId = userId;
         this.username = username;
@@ -17,8 +17,8 @@ public class ScoreDto {
         this.gameId = gameId;
     }
 
-    public long getScore() {
-        return score;
+    public long getPoints() {
+        return points;
     }
 
     public String getScoreImageUrl() {

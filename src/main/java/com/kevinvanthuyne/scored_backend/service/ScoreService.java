@@ -29,7 +29,7 @@ public class ScoreService {
     }
 
     public Optional<Score> getHighestScore(User user, Game game) {
-        return scoreDao.findFirstByUserAndGameOrderByScoreDesc(user, game);
+        return scoreDao.findFirstByUserAndGameOrderByPointsDesc(user, game);
     }
 
     public List<HighScore> getRanking(Game game) {
@@ -41,7 +41,7 @@ public class ScoreService {
             highestScore.ifPresent(score -> highScores.add(new HighScore(score)));
         }
 
-        highScores.sort(Comparator.comparingLong((HighScore h) -> h.getScore().getScore()).reversed());
+        highScores.sort(Comparator.comparingLong((HighScore h) -> h.getScore().getPoints()).reversed());
 
         for (int i = 0; i < highScores.size(); i++) {
             highScores.get(i).setRank(i + 1);

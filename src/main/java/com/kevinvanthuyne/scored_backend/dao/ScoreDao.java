@@ -9,5 +9,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ScoreDao extends CrudRepository<Score, UUID> {
-    Optional<Score> findFirstByUserAndGameOrderByScoreDesc(User user, Game game);
+    Optional<Score> findFirstByUserAndGameOrderByPointsDesc(User user, Game game);
 }

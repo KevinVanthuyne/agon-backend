@@ -18,20 +18,20 @@ public class Score {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    private long score;
+    private long points;
     private String scoreImageUrl;
     private LocalDateTime timestamp;
 
-    public Score(long score, String scoreImageUrl, User user, Game game, LocalDateTime timestamp) {
-        this.score = score;
+    public Score(long points, String scoreImageUrl, User user, Game game, LocalDateTime timestamp) {
+        this.points = points;
         this.scoreImageUrl = scoreImageUrl;
         this.user = user;
         this.game = game;
         this.timestamp = timestamp;
     }
 
-    public Score(long score, String scoreImageUrl, User user, Game game) {
-        this(score, scoreImageUrl, user, game, LocalDateTime.now());
+    public Score(long points, String scoreImageUrl, User user, Game game) {
+        this(points, scoreImageUrl, user, game, LocalDateTime.now());
     }
 
     public Score() {
@@ -62,12 +62,12 @@ public class Score {
         this.game = game;
     }
 
-    public long getScore() {
-        return score;
+    public long getPoints() {
+        return points;
     }
 
-    public void setScore(long score) {
-        this.score = score;
+    public void setPoints(long score) {
+        this.points = score;
     }
 
     public String getScoreImageUrl() {

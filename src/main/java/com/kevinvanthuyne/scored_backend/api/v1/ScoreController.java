@@ -69,14 +69,14 @@ public class ScoreController {
 
         Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), gameOpt.get()); // Retrieve before saving to know previous highest score
 
-        Score score = scoreService.addScore(new Score(scoreDto.getScore(), scoreDto.getScoreImageUrl(), userOpt.get(), gameOpt.get()));
+        Score score = scoreService.addScore(new Score(scoreDto.getPoints(), scoreDto.getScoreImageUrl(), userOpt.get(), gameOpt.get()));
         LOGGER.info("Score added: {}", score);
 
         long scoreDelta;
         if (highestScore.isEmpty()) {
-            scoreDelta = score.getScore();
+            scoreDelta = score.getPoints();
         } else {
-            scoreDelta = score.getScore() - highestScore.get().getScore();
+            scoreDelta = score.getPoints() - highestScore.get().getPoints();
         }
 
         ScorePostedDto scorePostedDto = new ScorePostedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank

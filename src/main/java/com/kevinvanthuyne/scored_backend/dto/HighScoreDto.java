@@ -20,7 +20,7 @@ public class HighScoreDto {
                 highScore.getRank(),
                 highScore.getScore().getUser().getName(),
                 highScore.getScore().getUser().getId(),
-                highScore.getScore().getScore()
+                highScore.getScore().getPoints()
         );
     }
 
