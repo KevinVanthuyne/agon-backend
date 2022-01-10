@@ -19,7 +19,7 @@ public class UserService {
         return userDao.save(user);
     }
 
-    public Optional<User> getUser(long id) {
+    public Optional<User> getUser(String id) {
         return userDao.findById(id);
     }
 

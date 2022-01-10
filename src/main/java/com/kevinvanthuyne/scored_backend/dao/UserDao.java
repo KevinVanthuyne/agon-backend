@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends CrudRepository<User, Integer> {
-    Optional<User> findById(long id);
+    Optional<User> findById(String id);
 
     List<User> findAll();
 }

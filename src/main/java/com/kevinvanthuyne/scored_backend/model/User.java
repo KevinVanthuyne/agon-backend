@@ -6,23 +6,23 @@ import javax.persistence.Id;
 @Entity(name = "users")
 public class User {
     @Id
-    private long id;
+    private String id;
     private String name;
 
-    public User(long id, String name) {
+    public User(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
     public User() {
-        this(-1, "");
+        this("", "");
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long discordId) {
+    public void setId(String discordId) {
         this.id = discordId;
     }
 
