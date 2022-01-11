@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/api/v1/scores")
+@RequestMapping(path = "/api/v1/score")
 public class ScoreController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScoreController.class);

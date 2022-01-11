@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/api/v1/games")
+@RequestMapping(path = "/api/v1/game")
 public class GameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final GameService gameService;

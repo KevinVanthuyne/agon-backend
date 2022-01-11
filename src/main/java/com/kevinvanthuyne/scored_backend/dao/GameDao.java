@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface GameDao extends CrudRepository<Game, Integer> {
     List<Game> findAll();
+
+    Game findFirstOrderByIdDesc();
 }
