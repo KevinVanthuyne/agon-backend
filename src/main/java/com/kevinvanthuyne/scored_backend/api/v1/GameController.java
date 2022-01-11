@@ -35,6 +35,6 @@ public class GameController {
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
         Game game = gameService.addGame(new Game(gameDto.getName()));
         LOGGER.info("Added game: {}", game);
-        return ResponseEntity.ok(new GameDto(game.getId(), game.getName()));
+        return ResponseEntity.ok(new GameDto(game));
     }
 }
