@@ -25,7 +25,7 @@ public class GameController {
 
     @GetMapping
     public ResponseEntity<List<GameDto>> getAllGames() {
-        List<GameDto> games = gameService.getAll().stream()
+        List<GameDto> games = gameService.getAllOrdered().stream()
                 .map(GameDto::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(games);
