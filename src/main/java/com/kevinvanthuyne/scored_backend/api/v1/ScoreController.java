@@ -35,8 +35,37 @@ public class ScoreController {
         this.gameService = gameService;
     }
 
-    @GetMapping(path = "/{gameId}/ranking")
-    public ResponseEntity<List<HighScoreDto>> getAllScores(@PathVariable int gameId) {
+    @GetMapping(path = "/game/{gameId}/user/{userId}")
+    public ResponseEntity<List<ScoreDto>> getScoresOfUserForGame(@PathVariable int gameId, @PathVariable String userId) {
+        Optional<Game> gameOpt = gameService.getGame(gameId);
+        Optional<User> userOpt = userService.getUser(userId);
+        if (gameOpt.isEmpty() || userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<ScoreDto> scores = scoreService.getScores(gameOpt.get(), userOpt.get()).stream()
+                .map(ScoreDto::new)
+                .toList();
+
+        return ResponseEntity.ok(scores);
+    }
+
+    @GetMapping(path = "/game/{gameId}")
+    public ResponseEntity<List<ScoreDto>> getScoresForGame(@PathVariable int gameId) {
+        Optional<Game> gameOpt = gameService.getGame(gameId);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<ScoreDto> scores = scoreService.getScores(gameOpt.get()).stream()
+                .map(ScoreDto::new)
+                .toList();
+
+        return ResponseEntity.ok(scores);
+    }
+
+    @GetMapping(path = "/game/{gameId}/ranking")
+    public ResponseEntity<List<HighScoreDto>> getRankingOfGame(@PathVariable int gameId) {
         Optional<Game> gameOpt = gameService.getGame(gameId);
         if (gameOpt.isEmpty()) {
             LOGGER.info("Could not find game id {}", gameId);

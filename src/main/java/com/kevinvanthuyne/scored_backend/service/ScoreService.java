@@ -49,4 +49,12 @@ public class ScoreService {
 
         return highScores;
     }
+
+    public List<Score> getScores(Game game) {
+        return scoreDao.findAllByGameOrderByTimestamp(game);
+    }
+
+    public List<Score> getScores(Game game, User user) {
+        return scoreDao.findAllByGameAndUserOrderByTimestamp(game, user);
+    }
 }
