@@ -12,17 +12,15 @@ public class Game {
     private int id;
     private String name;
     private LocalDate startDate;
-    private LocalDate endDate;
 
-    public Game(int id, String name, LocalDate startDate, LocalDate endDate) {
+    public Game(int id, String name, LocalDate startDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public Game(int id, String name) {
-        this(id, name, LocalDate.EPOCH, LocalDate.EPOCH);
+        this(id, name, LocalDate.EPOCH);
     }
 
     public Game(String name) {
@@ -55,14 +53,6 @@ public class Game {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     @Override

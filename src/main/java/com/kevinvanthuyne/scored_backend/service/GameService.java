@@ -16,8 +16,8 @@ public class GameService {
         this.gameDao = gameDao;
         // TODO temporary test data
         gameDao.save(new Game("Monster Bash"));
-        gameDao.save(new Game( "Medieval Madness"));
-        gameDao.save(new Game( "Indiana Jones"));
+        gameDao.save(new Game("Medieval Madness"));
+        gameDao.save(new Game("Indiana Jones"));
     }
 
     public Optional<Game> getGame(int id) {
@@ -54,12 +54,6 @@ public class GameService {
                 LocalDate oneMonthLater = previousGame.getStartDate().withMonth(previousGame.getStartDate().getMonthValue() + 1);
                 game.setStartDate(oneMonthLater);
             }
-
-            // Set the end date to the last day of the month
-            LocalDate start = game.getStartDate();
-            int lastDayOfMonth = start.lengthOfMonth();
-            LocalDate endOfMonth = start.withDayOfMonth(lastDayOfMonth);
-            game.setEndDate(endOfMonth);
         }
 
         gameDao.saveAll(games);
