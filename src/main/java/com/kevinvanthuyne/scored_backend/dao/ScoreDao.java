@@ -14,5 +14,7 @@ public interface ScoreDao extends CrudRepository<Score, UUID> {
 
     List<Score> findAllByGameOrderByTimestamp(Game game);
 
+    List<Score> findAllByUserOrderByTimestamp(User user);
+
     List<Score> findAllByGameAndUserOrderByTimestamp(Game game, User user);
 }

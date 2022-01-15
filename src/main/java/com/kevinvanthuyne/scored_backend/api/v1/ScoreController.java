@@ -64,6 +64,20 @@ public class ScoreController {
         return ResponseEntity.ok(scores);
     }
 
+    @GetMapping(path = "/user/{userId}")
+    public ResponseEntity<List<ScoreDto>> getScoresOfUser(@PathVariable String userId) {
+        Optional<User> userOpt = userService.getUser(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<ScoreDto> scores = scoreService.getScores(userOpt.get()).stream()
+                .map(ScoreDto::new)
+                .toList();
+
+        return ResponseEntity.ok(scores);
+    }
+
     @GetMapping(path = "/game/{gameId}/ranking")
     public ResponseEntity<List<HighScoreDto>> getRankingOfGame(@PathVariable int gameId) {
         Optional<Game> gameOpt = gameService.getGame(gameId);
