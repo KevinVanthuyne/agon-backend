@@ -50,8 +50,7 @@ public class GameService {
             // Set the start date to one month after the previous game
             if (i > 0) {
                 Game previousGame = games.get(i - 1);
-                // TODO rollover into next year
-                LocalDate oneMonthLater = previousGame.getStartDate().withMonth(previousGame.getStartDate().getMonthValue() + 1);
+                LocalDate oneMonthLater = previousGame.getStartDate().plusMonths(1);
                 game.setStartDate(oneMonthLater);
             }
         }
