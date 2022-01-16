@@ -1,5 +1,6 @@
 package com.kevinvanthuyne.scored_backend.api.v1;
 
+import com.kevinvanthuyne.scored_backend.dto.GameDto;
 import com.kevinvanthuyne.scored_backend.dto.HighScoreDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreAddedDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreDto;
@@ -122,7 +123,7 @@ public class ScoreController {
             scoreDelta = score.getPoints() - highestScore.get().getPoints();
         }
 
-        ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto, scoreDelta, -1, score.getTimestamp()); // TODO rank
+        ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto, new GameDto(activeGameOpt.get()), scoreDelta, -1, score.getTimestamp()); // TODO rank
 
         return ResponseEntity.ok(scoreAddedDto);
     }
