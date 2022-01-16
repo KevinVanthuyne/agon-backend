@@ -63,4 +63,8 @@ public class GameService {
         // Find the active game of the current month
         return gameDao.findFirstByStartDateBetween(now.withDayOfMonth(1), now.withDayOfMonth(now.lengthOfMonth()));
     }
+
+    public Game updateGame(Game updatedGame) {
+        return gameDao.save(updatedGame);
+    }
 }

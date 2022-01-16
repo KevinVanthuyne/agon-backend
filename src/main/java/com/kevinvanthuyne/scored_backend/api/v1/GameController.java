@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,5 +43,19 @@ public class GameController {
         Game game = gameService.addGame(new Game(gameDto.getName()));
         LOGGER.info("Added game: {}", game);
         return ResponseEntity.ok(new GameDto(game));
+    }
+
+    @PutMapping
+    public ResponseEntity<GameDto> updateGame(@RequestBody GameDto gameDto) {
+        Optional<Game> gameOpt = gameService.getGame(gameDto.getId());
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Game game = gameOpt.get();
+        game.setName(gameDto.getName());
+
+        Game updatedGame = gameService.updateGame(game);
+        LOGGER.info("Updated updatedGame: {}", updatedGame);
+        return ResponseEntity.ok(new GameDto(updatedGame));
     }
 }
