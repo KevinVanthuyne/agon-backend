@@ -95,13 +95,12 @@ public class ScoreController {
 
     @PostMapping
     public ResponseEntity<ScoreAddedDto> addNewScore(@RequestBody ScoreDto scoreDto) {
-        LOGGER.info("New score received: {}", scoreDto);
-
-        Optional<Game> gameOpt = gameService.getGame(scoreDto.getGameId());
-        if (gameOpt.isEmpty()) {
-            LOGGER.info("Could not find game id {}", scoreDto.getGameId());
-            return ResponseEntity.badRequest().build();
+        Optional<Game> activeGameOpt = gameService.getActiveGame();
+        if (activeGameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
+
+        LOGGER.info("New score received: {}", scoreDto);
 
         Optional<User> userOpt = userService.getUser(scoreDto.getUserId());
         if (userOpt.isEmpty()) {
@@ -110,9 +109,10 @@ public class ScoreController {
             userOpt = Optional.of(user);
         }
 
-        Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), gameOpt.get()); // Retrieve before saving to know previous highest score
 
-        Score score = scoreService.addScore(new Score(scoreDto.getPoints(), scoreDto.getScoreImageUrl(), userOpt.get(), gameOpt.get()));
+        Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), activeGameOpt.get()); // Retrieve before saving to know previous highest score
+
+        Score score = scoreService.addScore(new Score(scoreDto.getPoints(), scoreDto.getScoreImageUrl(), userOpt.get(), activeGameOpt.get()));
         LOGGER.info("Score added: {}", score);
 
         long scoreDelta;
