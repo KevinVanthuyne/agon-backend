@@ -57,4 +57,10 @@ public class GameService {
 
         gameDao.saveAll(games);
     }
+
+    public Optional<Game> getActiveGame() {
+        LocalDate now = LocalDate.now();
+        // Find the active game of the current month
+        return gameDao.findFirstByStartDateBetween(now.withDayOfMonth(1), now.withDayOfMonth(now.lengthOfMonth()));
+    }
 }

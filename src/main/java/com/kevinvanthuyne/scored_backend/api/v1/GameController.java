@@ -31,6 +31,12 @@ public class GameController {
         return ResponseEntity.ok(games);
     }
 
+    @GetMapping(path = "/active")
+    public ResponseEntity<GameDto> getActiveGame() {
+        Game game = gameService.getActiveGame().orElse(new Game());
+        return ResponseEntity.ok(new GameDto(game));
+    }
+
     @PostMapping
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
         Game game = gameService.addGame(new Game(gameDto.getName()));
