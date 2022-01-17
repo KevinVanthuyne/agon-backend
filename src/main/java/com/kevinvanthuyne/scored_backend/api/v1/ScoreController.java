@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,6 +89,21 @@ public class ScoreController {
         }
 
         List<HighScoreDto> highScores = scoreService.getRanking(gameOpt.get()).stream()
+                .map(HighScoreDto::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(highScores);
+    }
+
+    @GetMapping(path = "/ranking")
+    public ResponseEntity<List<HighScoreDto>> getRankingOfCurrentGame() {
+        Optional<Game> activeGameOpt = gameService.getActiveGame();
+
+        if (activeGameOpt.isEmpty()) {
+            return ResponseEntity.ok(new ArrayList<>());
+        }
+
+        List<HighScoreDto> highScores = scoreService.getRanking(activeGameOpt.get()).stream()
                 .map(HighScoreDto::new)
                 .collect(Collectors.toList());
 
