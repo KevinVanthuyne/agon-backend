@@ -28,7 +28,7 @@ public class GameController {
     public ResponseEntity<List<GameDto>> getAllGames() {
         List<GameDto> games = gameService.getAllOrdered().stream()
                 .map(GameDto::new)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(games);
     }
 

@@ -98,7 +98,7 @@ public class ScoreController {
 
         List<HighScoreDto> highScores = scoreService.getRanking(gameOpt.get()).stream()
                 .map(HighScoreDto::new)
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(highScores);
     }
@@ -113,7 +113,7 @@ public class ScoreController {
 
         List<HighScoreDto> highScores = scoreService.getRanking(activeGameOpt.get()).stream()
                 .map(HighScoreDto::new)
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(highScores);
     }
