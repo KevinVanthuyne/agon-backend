@@ -45,6 +45,18 @@ public class ScoreController {
         return ResponseEntity.ok(new ScoreDto(scoreOpt.get()));
     }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<ScoreDto> deleteScore(@PathVariable String id) {
+        Optional<Score> scoreOpt = scoreService.getScore(UUID.fromString(id));
+
+        if (scoreOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        scoreService.deleteScore(UUID.fromString(id));
+
+        return ResponseEntity.ok(new ScoreDto(scoreOpt.get()));
+    }
+
     @GetMapping(path = "/game/{gameId}/user/{userId}")
     public ResponseEntity<List<ScoreDto>> getScoresOfUserForGame(@PathVariable int gameId, @PathVariable String userId) {
         Optional<Game> gameOpt = gameService.getGame(gameId);

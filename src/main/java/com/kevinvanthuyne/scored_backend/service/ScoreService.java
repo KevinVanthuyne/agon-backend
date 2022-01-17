@@ -62,4 +62,13 @@ public class ScoreService {
     public List<Score> getScores(Game game, User user) {
         return scoreDao.findAllByGameAndUserOrderByTimestamp(game, user);
     }
+
+    public boolean deleteScore(UUID id) {
+        Optional<Score> scoreOpt = scoreDao.findById(id);
+        if (scoreOpt.isEmpty()) {
+            return false;
+        }
+        scoreDao.delete(scoreOpt.get());
+        return true;
+    }
 }
