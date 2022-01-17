@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,6 +36,13 @@ public class ScoreController {
         this.scoreService = scoreService;
         this.userService = userService;
         this.gameService = gameService;
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ScoreDto> getScore(@PathVariable String id) {
+        Optional<Score> scoreOpt = scoreService.getScore(UUID.fromString(id));
+        if (scoreOpt.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new ScoreDto(scoreOpt.get()));
     }
 
     @GetMapping(path = "/game/{gameId}/user/{userId}")

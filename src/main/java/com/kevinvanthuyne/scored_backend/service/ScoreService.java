@@ -8,10 +8,7 @@ import com.kevinvanthuyne.scored_backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ScoreService {
@@ -26,6 +23,10 @@ public class ScoreService {
 
     public Score addScore(Score score) {
         return scoreDao.save(score);
+    }
+
+    public Optional<Score> getScore(UUID id) {
+        return scoreDao.findById(id);
     }
 
     public Optional<Score> getHighestScore(User user, Game game) {
