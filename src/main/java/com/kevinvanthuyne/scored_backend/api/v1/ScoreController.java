@@ -105,7 +105,7 @@ public class ScoreController {
 
         Optional<User> userOpt = userService.getUser(scoreDto.getUserId());
         if (userOpt.isEmpty()) {
-            User user = userService.addUser(new User(scoreDto.getUserId(), scoreDto.getUsername()));
+            User user = userService.addUser(new User(scoreDto.getUserId(), scoreDto.getUsername(), ""));
             LOGGER.info("New userOpt added: {}", user);
             userOpt = Optional.of(user);
         }

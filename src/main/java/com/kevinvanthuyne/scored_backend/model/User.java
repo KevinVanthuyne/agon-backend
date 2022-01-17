@@ -8,22 +8,24 @@ public class User {
     @Id
     private String id;
     private String name;
+    private String initials;
 
-    public User(String id, String name) {
+    public User(String id, String name, String initials) {
         this.id = id;
         this.name = name;
+        this.initials = initials;
     }
 
     public User() {
-        this("", "");
+        this("", "", "");
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String discordId) {
-        this.id = discordId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -32,5 +34,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
     }
 }
