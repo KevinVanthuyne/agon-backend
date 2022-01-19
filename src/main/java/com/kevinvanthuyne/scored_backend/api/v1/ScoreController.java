@@ -5,6 +5,7 @@ import com.kevinvanthuyne.scored_backend.dto.HighScoreDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreAddedDto;
 import com.kevinvanthuyne.scored_backend.dto.ScoreDto;
 import com.kevinvanthuyne.scored_backend.model.Game;
+import com.kevinvanthuyne.scored_backend.model.HighScore;
 import com.kevinvanthuyne.scored_backend.model.Score;
 import com.kevinvanthuyne.scored_backend.model.User;
 import com.kevinvanthuyne.scored_backend.service.GameService;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/v1/score")
@@ -137,17 +137,19 @@ public class ScoreController {
             return ResponseEntity.notFound().build();
         }
 
-        LOGGER.info("New score received: {}", scoreDto);
-
         Optional<User> userOpt = userService.getUser(scoreDto.getUserId());
         if (userOpt.isEmpty()) {
             User user = userService.addUser(new User(scoreDto.getUserId(), scoreDto.getUsername(), ""));
-            LOGGER.info("New userOpt added: {}", user);
+            LOGGER.info("New user added: {}", user);
             userOpt = Optional.of(user);
         }
 
-
         Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), activeGameOpt.get()); // Retrieve before saving to know previous highest score
+
+        // Only higher scores than a user's top score can be added
+        if (highestScore.isPresent() && scoreDto.getPoints() <= highestScore.get().getPoints()) {
+            return ResponseEntity.badRequest().build();
+        }
 
         Score score = scoreService.addScore(new Score(scoreDto.getPoints(), scoreDto.getScoreImageUrl(), userOpt.get(), activeGameOpt.get()));
         LOGGER.info("Score added: {}", score);
@@ -159,7 +161,14 @@ public class ScoreController {
             scoreDelta = score.getPoints() - highestScore.get().getPoints();
         }
 
-        ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto, new GameDto(activeGameOpt.get()), scoreDelta, -1, score.getTimestamp()); // TODO rank
+        HighScore highScore = scoreService.getRankOfScore(score).orElseThrow(() -> new IllegalArgumentException("Added scores should always be a high score."));
+        int highscoreAmount = scoreService.getUnrankedHighScoresPerUser(activeGameOpt.get()).size();
+
+        ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto,
+                                                        new GameDto(activeGameOpt.get()),
+                                                        scoreDelta, highScore.getRank(),
+                                                        highscoreAmount,
+                                                        score.getTimestamp());
 
         return ResponseEntity.ok(scoreAddedDto);
     }

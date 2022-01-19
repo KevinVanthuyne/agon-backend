@@ -34,13 +34,7 @@ public class ScoreService {
     }
 
     public List<HighScore> getRanking(Game game) {
-        List<User> users = userService.getAllUsers();
-        List<HighScore> highScores = new ArrayList<>();
-
-        for (User user : users) {
-            Optional<Score> highestScore = getHighestScore(user, game);
-            highestScore.ifPresent(score -> highScores.add(new HighScore(score)));
-        }
+        List<HighScore> highScores = getUnrankedHighScoresPerUser(game);
 
         highScores.sort(Comparator.comparingLong((HighScore h) -> h.getScore().getPoints()).reversed());
 
@@ -49,6 +43,15 @@ public class ScoreService {
         }
 
         return highScores;
+    }
+
+    public Optional<HighScore> getRankOfScore(Score score) {
+        for (HighScore highScore : getRanking(score.getGame())) {
+            if (highScore.getScore().getId() == score.getId()) {
+                return Optional.of(highScore);
+            }
+        }
+        return Optional.empty();
     }
 
     public List<Score> getScores(Game game) {
@@ -71,4 +74,19 @@ public class ScoreService {
         scoreDao.delete(scoreOpt.get());
         return true;
     }
+
+    /**
+     * @return The HighScore of each user, without a rank on it yet.
+     */
+    public  List<HighScore> getUnrankedHighScoresPerUser(Game game) {
+        List<User> users = userService.getAllUsers();
+        List<HighScore> highScores = new ArrayList<>();
+
+        for (User user : users) {
+            Optional<Score> highestScore = getHighestScore(user, game);
+            highestScore.ifPresent(score -> highScores.add(new HighScore(score)));
+        }
+        return highScores;
+    }
+
 }

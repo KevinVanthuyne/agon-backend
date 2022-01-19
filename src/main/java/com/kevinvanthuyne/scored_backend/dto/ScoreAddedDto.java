@@ -7,13 +7,15 @@ public class ScoreAddedDto {
     private final GameDto game;
     private final long scoreDelta;
     private final int rank;
+    private final int amountOfHighScores;
     private final LocalDateTime timestamp;
 
-    public ScoreAddedDto(ScoreDto score, GameDto game, long scoreDelta, int rank, LocalDateTime timestamp) {
+    public ScoreAddedDto(ScoreDto score, GameDto game, long scoreDelta, int rank, int amountOfHighScores, LocalDateTime timestamp) {
         this.score = score;
         this.game = game;
         this.scoreDelta = scoreDelta;
         this.rank = rank;
+        this.amountOfHighScores = amountOfHighScores;
         this.timestamp = timestamp;
     }
 
@@ -35,5 +37,9 @@ public class ScoreAddedDto {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public int getAmountOfHighScores() {
+        return amountOfHighScores;
     }
 }
