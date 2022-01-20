@@ -137,9 +137,9 @@ public class ScoreController {
             return ResponseEntity.notFound().build();
         }
 
-        Optional<User> userOpt = userService.getUser(scoreDto.getUserId());
+        Optional<User> userOpt = userService.getUser(scoreDto.userId());
         if (userOpt.isEmpty()) {
-            User user = userService.addUser(new User(scoreDto.getUserId(), scoreDto.getUsername(), ""));
+            User user = userService.addUser(new User(scoreDto.userId(), scoreDto.username(), ""));
             LOGGER.info("New user added: {}", user);
             userOpt = Optional.of(user);
         }
@@ -147,11 +147,11 @@ public class ScoreController {
         Optional<Score> highestScore = scoreService.getHighestScore(userOpt.get(), activeGameOpt.get()); // Retrieve before saving to know previous highest score
 
         // Only higher scores than a user's top score can be added
-        if (highestScore.isPresent() && scoreDto.getPoints() <= highestScore.get().getPoints()) {
+        if (highestScore.isPresent() && scoreDto.points() <= highestScore.get().getPoints()) {
             return ResponseEntity.badRequest().build();
         }
 
-        Score score = scoreService.addScore(new Score(scoreDto.getPoints(), scoreDto.getScoreImageUrl(), userOpt.get(), activeGameOpt.get()));
+        Score score = scoreService.addScore(new Score(scoreDto.points(), scoreDto.scoreImageUrl(), userOpt.get(), activeGameOpt.get()));
         LOGGER.info("Score added: {}", score);
 
         long scoreDelta;

@@ -26,9 +26,9 @@ public class UserController {
      */
     @PutMapping
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
-        User user = userService.getUser(userDto.getId()).orElse(new User());
-        user.setName(userDto.getName());
-        user.setInitials(userDto.getInitials());
+        User user = userService.getUser(userDto.id()).orElse(new User());
+        user.setName(userDto.name());
+        user.setInitials(userDto.initials());
         User savedUser = userService.addUser(user);
 
         return ResponseEntity.ok(new UserDto(savedUser));

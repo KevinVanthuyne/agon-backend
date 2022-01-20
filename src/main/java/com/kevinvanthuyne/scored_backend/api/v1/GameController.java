@@ -40,19 +40,19 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
-        Game game = gameService.addGame(new Game(gameDto.getName()));
+        Game game = gameService.addGame(new Game(gameDto.name()));
         LOGGER.info("Added game: {}", game);
         return ResponseEntity.ok(new GameDto(game));
     }
 
     @PutMapping
     public ResponseEntity<GameDto> updateGame(@RequestBody GameDto gameDto) {
-        Optional<Game> gameOpt = gameService.getGame(gameDto.getId());
+        Optional<Game> gameOpt = gameService.getGame(gameDto.id());
         if (gameOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Game game = gameOpt.get();
-        game.setName(gameDto.getName());
+        game.setName(gameDto.name());
 
         Game updatedGame = gameService.updateGame(game);
         LOGGER.info("Updated updatedGame: {}", updatedGame);

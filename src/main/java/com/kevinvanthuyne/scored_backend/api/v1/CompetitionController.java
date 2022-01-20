@@ -22,7 +22,7 @@ public class CompetitionController {
 
     @PostMapping
     public ResponseEntity<StartCompetitionDto> startCompetition(@RequestBody StartCompetitionDto startDto) {
-        gameService.setStartDates(startDto.getStartDate());
+        gameService.setStartDates(startDto.startDate());
         return ResponseEntity.ok(startDto);
     }
 }
