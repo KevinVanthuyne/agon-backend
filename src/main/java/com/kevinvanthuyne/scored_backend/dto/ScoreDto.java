@@ -5,13 +5,13 @@ import com.kevinvanthuyne.scored_backend.model.Score;
 import java.time.LocalDateTime;
 
 public record ScoreDto(String id,
-                    long points,
-                    String scoreImageUrl,
-                    LocalDateTime timestamp,
-                    String userId,
-                    String username,
-                    String gameInitials,
-                    int gameId) {
+                       long points,
+                       String scoreImageUrl,
+                       LocalDateTime timestamp,
+                       String userId,
+                       String username,
+                       String gameInitials,
+                       int gameId) {
     public ScoreDto(Score score) {
         this(
                 score.getId().toString(),
@@ -20,7 +20,7 @@ public record ScoreDto(String id,
                 score.getTimestamp(),
                 score.getUser().getId(),
                 score.getUser().getName(),
-                "",
+                score.getUser().getInitials(),
                 score.getGame().getId()
         );
     }
