@@ -14,10 +14,6 @@ public class GameService {
 
     public GameService(GameDao gameDao) {
         this.gameDao = gameDao;
-        // TODO temporary test data
-        gameDao.save(new Game("Monster Bash"));
-        gameDao.save(new Game("Medieval Madness"));
-        gameDao.save(new Game("Indiana Jones"));
     }
 
     public Optional<Game> getGame(int id) {
@@ -34,6 +30,10 @@ public class GameService {
 
     public List<Game> getAllOrdered() {
         return gameDao.findAllByOrderByIdAsc();
+    }
+
+    public List<Game> getAllCurrentAndPassedGames() {
+        return gameDao.findAllByStartDateBefore(LocalDate.now());
     }
 
     public void setStartDates(LocalDate startDate) {
