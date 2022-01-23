@@ -1,3 +1,6 @@
+data.sql
+
+
 .idea/
 .mvn/
 src/**/application-confidential.properties
