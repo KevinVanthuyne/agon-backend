@@ -31,6 +31,14 @@ public class GameController {
         return ResponseEntity.ok(games);
     }
 
+    @GetMapping(path = "/passed")
+    public ResponseEntity<List<GameDto>> getAllCurrentAndPassedGames() {
+        List<GameDto> games = gameService.getAllCurrentAndPassedGames().stream()
+                .map(GameDto::new)
+                .toList();
+        return ResponseEntity.ok(games);
+    }
+
     @GetMapping(path = "/active")
     public ResponseEntity<GameDto> getActiveGame() {
         Game game = gameService.getActiveGame().orElse(new Game());

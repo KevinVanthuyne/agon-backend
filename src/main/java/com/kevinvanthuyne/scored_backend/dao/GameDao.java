@@ -12,6 +12,8 @@ public interface GameDao extends CrudRepository<Game, Integer> {
 
     List<Game> findAllByOrderByIdAsc();
 
+    List<Game> findAllByStartDateBefore(LocalDate localDate);
+
     Game findFirstByOrderByIdAsc();
 
     Optional<Game> findFirstByStartDateBetween(LocalDate start, LocalDate end);
