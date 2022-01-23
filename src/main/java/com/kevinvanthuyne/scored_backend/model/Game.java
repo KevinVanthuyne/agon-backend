@@ -1,8 +1,6 @@
 package com.kevinvanthuyne.scored_backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "games")
@@ -12,6 +10,10 @@ public class Game {
     private int id;
     private String name;
     private LocalDate startDate;
+
+    @OneToOne(mappedBy = "game", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private GameStyle gameStyle;
 
     public Game(int id, String name, LocalDate startDate) {
         this.id = id;
@@ -53,6 +55,14 @@ public class Game {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public GameStyle getGameStyle() {
+        return gameStyle;
+    }
+
+    public void setGameStyle(GameStyle gameStyle) {
+        this.gameStyle = gameStyle;
     }
 
     @Override

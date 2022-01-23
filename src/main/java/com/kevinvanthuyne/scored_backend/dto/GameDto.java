@@ -6,9 +6,15 @@ import java.time.LocalDate;
 
 public record GameDto(int id,
                       String name,
-                      LocalDate startDate) implements ModelBuildable<Game> {
+                      LocalDate startDate,
+                      GameStyleDto gameStyle) implements ModelBuildable<Game> {
     public GameDto(Game game) {
-        this(game.getId(), game.getName(), game.getStartDate());
+        this(
+                game.getId(),
+                game.getName(),
+                game.getStartDate(),
+                new GameStyleDto(game.getGameStyle())
+        );
     }
 
     @Override
