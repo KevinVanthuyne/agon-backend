@@ -17,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/v1/score")
@@ -130,6 +128,16 @@ public class ScoreController {
         return ResponseEntity.ok(highScores);
     }
 
+    @GetMapping(path = "/ranking/all")
+    public ResponseEntity<Map<Integer, List<HighScoreDto>>> getRankingOfAllGames() {
+        Map<Integer, List<HighScoreDto>> allRankingsDto = scoreService.getAllRankings().entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> e.getValue().stream().map(HighScoreDto::new).toList()
+                ));
+        return ResponseEntity.ok(allRankingsDto);
+    }
+
     @PostMapping
     public ResponseEntity<ScoreAddedDto> addNewScore(@RequestBody ScoreDto scoreDto) {
         Optional<Game> activeGameOpt = gameService.getActiveGame();
@@ -165,10 +173,10 @@ public class ScoreController {
         int highscoreAmount = scoreService.getUnrankedHighScoresPerUser(activeGameOpt.get()).size();
 
         ScoreAddedDto scoreAddedDto = new ScoreAddedDto(scoreDto,
-                                                        new GameDto(activeGameOpt.get()),
-                                                        scoreDelta, highScore.getRank(),
-                                                        highscoreAmount,
-                                                        score.getTimestamp());
+                new GameDto(activeGameOpt.get()),
+                scoreDelta, highScore.getRank(),
+                highscoreAmount,
+                score.getTimestamp());
 
         return ResponseEntity.ok(scoreAddedDto);
     }

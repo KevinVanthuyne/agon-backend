@@ -14,11 +14,13 @@ import java.util.*;
 public class ScoreService {
     private final ScoreDao scoreDao;
     private final UserService userService;
+    private final GameService gameService;
 
     @Autowired
-    public ScoreService(ScoreDao scoreDao, UserService userService) {
+    public ScoreService(ScoreDao scoreDao, UserService userService, GameService gameService) {
         this.scoreDao = scoreDao;
         this.userService = userService;
+        this.gameService = gameService;
     }
 
     public Score addScore(Score score) {
@@ -31,6 +33,15 @@ public class ScoreService {
 
     public Optional<Score> getHighestScore(User user, Game game) {
         return scoreDao.findFirstByUserAndGameOrderByPointsDesc(user, game);
+    }
+
+    public Map<Integer, List<HighScore>> getAllRankings() {
+        Map<Integer, List<HighScore>> rankings = new HashMap<>();
+
+        for (Game game : gameService.getAll()) {
+            rankings.put(game.getId(), getRanking(game));
+        }
+        return rankings;
     }
 
     public List<HighScore> getRanking(Game game) {
@@ -78,7 +89,7 @@ public class ScoreService {
     /**
      * @return The HighScore of each user, without a rank on it yet.
      */
-    public  List<HighScore> getUnrankedHighScoresPerUser(Game game) {
+    public List<HighScore> getUnrankedHighScoresPerUser(Game game) {
         List<User> users = userService.getAllUsers();
         List<HighScore> highScores = new ArrayList<>();
 
