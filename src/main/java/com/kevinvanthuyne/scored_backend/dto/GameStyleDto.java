@@ -8,6 +8,7 @@ public record GameStyleDto(int gameId,
                            String headerImage,
                            String borderColor,
                            String fontColor) {
+
     public GameStyleDto(GameStyle gameStyle) {
         this(
                 gameStyle.getGame().getId(),
