@@ -48,7 +48,7 @@ public class ScoreController {
         Optional<Score> scoreOpt = scoreService.getScore(UUID.fromString(id));
 
         if (scoreOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         scoreService.deleteScore(UUID.fromString(id));
 
@@ -60,7 +60,7 @@ public class ScoreController {
         Optional<Game> gameOpt = gameService.getGame(gameId);
         Optional<User> userOpt = userService.getUser(userId);
         if (gameOpt.isEmpty() || userOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
 
         List<ScoreDto> scores = scoreService.getScores(gameOpt.get(), userOpt.get()).stream()
@@ -74,7 +74,7 @@ public class ScoreController {
     public ResponseEntity<List<ScoreDto>> getScoresForGame(@PathVariable int gameId) {
         Optional<Game> gameOpt = gameService.getGame(gameId);
         if (gameOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
 
         List<ScoreDto> scores = scoreService.getScores(gameOpt.get()).stream()
@@ -88,7 +88,7 @@ public class ScoreController {
     public ResponseEntity<List<ScoreDto>> getScoresOfUser(@PathVariable String userId) {
         Optional<User> userOpt = userService.getUser(userId);
         if (userOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
 
         List<ScoreDto> scores = scoreService.getScores(userOpt.get()).stream()
