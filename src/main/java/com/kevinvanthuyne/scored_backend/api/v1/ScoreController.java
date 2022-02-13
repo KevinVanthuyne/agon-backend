@@ -98,6 +98,21 @@ public class ScoreController {
         return ResponseEntity.ok(scores);
     }
 
+    @GetMapping(path = "/user/{userId}/personal-best")
+    public ResponseEntity<ScoreDto> getPersonalBestOfUser(@PathVariable String userId) {
+        Optional<User> userOpt = userService.getUser(userId);
+        Optional<Game> gameOpt = gameService.getActiveGame();
+        if (userOpt.isEmpty() || gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Score> scoreOpt = scoreService.getHighestScore(userOpt.get(), gameOpt.get());
+        if (scoreOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(new ScoreDto(scoreOpt.get()));
+    }
+
     @GetMapping(path = "/game/{gameId}/ranking")
     public ResponseEntity<List<HighScoreDto>> getRankingOfGame(@PathVariable int gameId) {
         Optional<Game> gameOpt = gameService.getGame(gameId);
