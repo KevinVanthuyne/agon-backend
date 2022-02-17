@@ -33,7 +33,7 @@ public class GameService {
     }
 
     public List<Game> getAllCurrentAndPassedGames() {
-        return gameDao.findAllByStartDateBefore(LocalDate.now());
+        return gameDao.findAllByStartDateLessThanEqual(LocalDate.now());
     }
 
     public void setStartDates(LocalDate startDate) {

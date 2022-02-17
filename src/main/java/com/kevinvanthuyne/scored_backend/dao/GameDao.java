@@ -12,7 +12,7 @@ public interface GameDao extends CrudRepository<Game, Integer> {
 
     List<Game> findAllByOrderByIdAsc();
 
-    List<Game> findAllByStartDateBefore(LocalDate localDate);
+    List<Game> findAllByStartDateLessThanEqual(LocalDate localDate);
 
     Game findFirstByOrderByIdAsc();
 
