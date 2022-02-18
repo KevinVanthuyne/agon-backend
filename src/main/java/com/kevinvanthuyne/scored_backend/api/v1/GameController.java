@@ -48,15 +48,6 @@ public class GameController {
         return ResponseEntity.ok(new GameDto(gameOpt.get()));
     }
 
-    @GetMapping(path = "/{gameId}")
-    public ResponseEntity<GameDto> getGame(@PathVariable int gameId) {
-        Optional<Game> gameOpt = gameService.getGame(gameId);
-        if (gameOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new GameDto(gameOpt.get()));
-    }
-
     @PostMapping
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
         Game game = gameService.addGame(new Game(gameDto.name()));
