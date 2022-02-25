@@ -31,6 +31,15 @@ public class GameController {
         return ResponseEntity.ok(games);
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<GameDto> getGame(@PathVariable int id) {
+        Optional<Game> gameOpt = gameService.getGame(id);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new GameDto(gameOpt.get()));
+    }
+
     @GetMapping(path = "/passed")
     public ResponseEntity<List<GameDto>> getAllCurrentAndPassedGames() {
         List<GameDto> games = gameService.getAllCurrentAndPassedGames().stream()
