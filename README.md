@@ -13,3 +13,7 @@ and Scored UI. It uses a PostgreSQL database to store all data.
     - Grant all privileges of `scored-db` to the user (initially user to create all schemes)
 - Run `ScoredBackendApplication.java`
 - After the server has started, revoke all privileges of the `scored-db` user and grant `select, insert, delete, update`
+
+## Docker Setup
+
+- Run `docker build -t kevinvt/scored-backend .` to build image
