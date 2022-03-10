@@ -1,13 +1,7 @@
 FROM openjdk:17-jdk-alpine
 
-RUN addgroup -S spring && adduser -S spring -G spring
+ARG JAR_FILE=target/*.jar
 
-USER spring:spring
+COPY ${JAR_FILE} app.jar
 
-ARG DEPENDENCY=target/dependency
-
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
-
-ENTRYPOINT ["java","-cp","app:app/lib/*","hello.Application"]
+ENTRYPOINT ["java","-jar","/app.jar"]
