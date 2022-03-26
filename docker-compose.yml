@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   backend:
     image: 'scored-backend:latest'
     build:
