@@ -16,11 +16,6 @@ and Scored UI. It uses a PostgreSQL database to store all data.
 
 ## Docker Setup
 
-### Build image
-
 - Run `maven clean package` (with skip tests) to build the app 
 - Run `docker build -t kevinvt/scored-backend .` to build image
-
-### Run Docker compose
-
-- Run `docker-compose up`
+- Use Docker Compose to run [scored-docker-compose](https://github.com/KevinVanthuyne/scored-docker-compose) and run the entire application
