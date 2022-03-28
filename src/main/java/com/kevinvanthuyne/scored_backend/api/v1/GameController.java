@@ -40,6 +40,7 @@ public class GameController {
         return ResponseEntity.ok(new GameDto(gameOpt.get()));
     }
 
+    // Publicly accessible for the UI
     @GetMapping(path = "/passed")
     public ResponseEntity<List<GameDto>> getAllCurrentAndPassedGames() {
         List<GameDto> games = gameService.getAllCurrentAndPassedGames().stream()

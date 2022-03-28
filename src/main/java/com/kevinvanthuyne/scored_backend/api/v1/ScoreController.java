@@ -143,6 +143,9 @@ public class ScoreController {
         return ResponseEntity.ok(highScores);
     }
 
+
+    // Publicly accessible for the UI
+    // TODO UI only needs the passed rankings, not all rankings
     @GetMapping(path = "/ranking/all")
     public ResponseEntity<Map<Integer, List<HighScoreDto>>> getRankingOfAllGames() {
         Map<Integer, List<HighScoreDto>> allRankingsDto = scoreService.getAllRankings().entrySet().stream()
