@@ -1,3 +1,4 @@
 spring.datasource.username=example-user
 spring.datasource.password=example-password
-
+api-user.username=api-user
+api-user.password=api-password

@@ -6,7 +6,7 @@ and Scored UI. It uses a PostgreSQL database to store all data.
 ## Setup
 
 - Install Java SDK 17
-- Rename `application-confidential.properties.example` to `application-confidential.properties`
+- Rename `application-confidential.properties.example` to `application-confidential.properties` and fill in the necessary data
 - Install PostgreSQL 14 on port 5432
     - Create a new `scored-db` database
     - Create a new user and fill in the credentials in `application-confidential.properties`
