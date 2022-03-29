@@ -18,10 +18,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${api-user.username}")
+    @Value("${api.user.username}")
     private String username;
 
-    @Value("${api-user.password}")
+    @Value("${api.user.password}")
     private String password;
 
     @Override
