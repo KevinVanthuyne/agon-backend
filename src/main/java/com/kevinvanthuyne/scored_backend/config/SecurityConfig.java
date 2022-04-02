@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // The necessary endpoints for the UI are publicly accessible
-                .antMatchers("/api/v1/game/passed", "/api/v1/score/ranking/all").permitAll()
+                .antMatchers("/api/v1/game/passed", "/api/v1/score/ranking/all", "/api/v1/game/active").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().csrf().disable()
