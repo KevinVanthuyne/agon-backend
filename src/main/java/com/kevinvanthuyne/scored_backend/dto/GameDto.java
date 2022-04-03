@@ -13,7 +13,7 @@ public record GameDto(int id,
                 game.getId(),
                 game.getName(),
                 game.getStartDate(),
-                new GameStyleDto(game.getGameStyle())
+                game.getGameStyle() == null ? new GameStyleDto(game.getId()) : new GameStyleDto(game.getGameStyle())
         );
     }
 

@@ -49,6 +49,7 @@ public class GameController {
         return ResponseEntity.ok(games);
     }
 
+    // Publicly accessible for the UI
     @GetMapping(path = "/active")
     public ResponseEntity<GameDto> getActiveGame() {
         Optional<Game> gameOpt = gameService.getActiveGame();

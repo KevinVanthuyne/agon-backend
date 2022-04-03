@@ -18,4 +18,8 @@ public record GameStyleDto(int gameId,
                 gameStyle.getBorderColor(),
                 gameStyle.getFontColor());
     }
+
+    public GameStyleDto(int gameId) {
+        this(gameId, null, "gray", null, null, "white");
+    }
 }
