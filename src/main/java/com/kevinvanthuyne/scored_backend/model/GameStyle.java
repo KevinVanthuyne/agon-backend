@@ -1,9 +1,10 @@
 package com.kevinvanthuyne.scored_backend.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "game_styles")
-public class GameStyle {
+public class GameStyle implements Serializable {
     @Id
     @Column(name = "game_id")
     private int id;
