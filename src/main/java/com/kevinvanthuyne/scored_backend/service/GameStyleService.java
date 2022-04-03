@@ -6,6 +6,7 @@ import com.kevinvanthuyne.scored_backend.model.GameStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,5 +20,13 @@ public class GameStyleService {
 
     public Optional<GameStyle> getStyle(Game game) {
         return gameStyleDao.findById(game);
+    }
+
+    public List<GameStyle> getAllOrdered() {
+        return gameStyleDao.findAllByOrderByGameIdAsc();
+    }
+
+    public GameStyle updateGameStyle(GameStyle gameStyle) {
+        return gameStyleDao.save(gameStyle);
     }
 }
