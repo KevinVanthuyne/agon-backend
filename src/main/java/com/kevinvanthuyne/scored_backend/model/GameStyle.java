@@ -31,7 +31,7 @@ public class GameStyle implements Serializable {
     }
 
     public GameStyle(Game game) {
-        this(game, "", "", "", "", "");
+        this(game, "", "gray", "", "", "orange");
     }
 
     public GameStyle() {
