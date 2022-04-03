@@ -37,7 +37,26 @@ public class GameStyleController {
         if (styleOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        GameStyle updatedGameStyle = gameStyleService.updateGameStyle(styleOpt.get());
+
+        // TODO fix horrendous update
+        GameStyle oldGameStyle = styleOpt.get();
+        if (gameStyleDto.backgroundImage() != null) {
+            oldGameStyle.setBackgroundImage(gameStyleDto.backgroundImage());
+        }
+        if (gameStyleDto.backgroundColor() != null) {
+            oldGameStyle.setBackgroundColor(gameStyleDto.backgroundColor());
+        }
+        if (gameStyleDto.headerImage() != null) {
+            oldGameStyle.setHeaderImage(gameStyleDto.headerImage());
+        }
+        if (gameStyleDto.borderColor() != null) {
+            oldGameStyle.setBorderColor(gameStyleDto.borderColor());
+        }
+        if (gameStyleDto.fontColor() != null) {
+            oldGameStyle.setFontColor(gameStyleDto.fontColor());
+        }
+
+        GameStyle updatedGameStyle = gameStyleService.updateGameStyle(oldGameStyle);
         LOGGER.info("Updated game style: {}", updatedGameStyle);
 
         return ResponseEntity.ok(new GameStyleDto(updatedGameStyle));
