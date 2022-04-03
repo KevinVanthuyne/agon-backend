@@ -2,6 +2,7 @@ package com.kevinvanthuyne.scored_backend.api.v1;
 
 import com.kevinvanthuyne.scored_backend.dto.GameDto;
 import com.kevinvanthuyne.scored_backend.model.Game;
+import com.kevinvanthuyne.scored_backend.model.GameStyle;
 import com.kevinvanthuyne.scored_backend.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,9 +62,11 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
-        Game game = gameService.addGame(new Game(gameDto.name()));
-        LOGGER.info("Added game: {}", game);
-        return ResponseEntity.ok(new GameDto(game));
+        Game game = new Game(gameDto.name());
+        game.setGameStyle(new GameStyle(game));
+        Game addedGame = gameService.addGame(game);
+        LOGGER.info("Added addedGame: {}", addedGame);
+        return ResponseEntity.ok(new GameDto(addedGame));
     }
 
     @PutMapping

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class GameStyle implements Serializable {
     @Id
     @Column(name = "game_id")
-    private int id;
+    private int gameId;
 
     @OneToOne
     @MapsId
@@ -22,6 +22,7 @@ public class GameStyle implements Serializable {
 
     public GameStyle(Game game, String backgroundImage, String backgroundColor, String headerImage, String borderColor, String fontColor) {
         this.game = game;
+        this.gameId = game.getId();
         this.backgroundImage = backgroundImage;
         this.backgroundColor = backgroundColor;
         this.headerImage = headerImage;
@@ -29,8 +30,12 @@ public class GameStyle implements Serializable {
         this.fontColor = fontColor;
     }
 
+    public GameStyle(Game game) {
+        this(game, "", "", "", "", "");
+    }
+
     public GameStyle() {
-        this(new Game(), "", "", "", "", "");
+        this(new Game());
     }
 
     public Game getGame() {

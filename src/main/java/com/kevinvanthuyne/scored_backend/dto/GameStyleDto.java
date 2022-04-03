@@ -1,5 +1,6 @@
 package com.kevinvanthuyne.scored_backend.dto;
 
+import com.kevinvanthuyne.scored_backend.model.Game;
 import com.kevinvanthuyne.scored_backend.model.GameStyle;
 
 public record GameStyleDto(int gameId,
@@ -7,7 +8,7 @@ public record GameStyleDto(int gameId,
                            String backgroundColor,
                            String headerImage,
                            String borderColor,
-                           String fontColor) {
+                           String fontColor) implements ModelWithDependencyBuildable<GameStyle, Game> {
 
     public GameStyleDto(GameStyle gameStyle) {
         this(
@@ -19,7 +20,8 @@ public record GameStyleDto(int gameId,
                 gameStyle.getFontColor());
     }
 
-    public GameStyleDto(int gameId) {
-        this(gameId, null, "gray", null, null, "white");
+    @Override
+    public GameStyle buildModel(Game game) {
+        return new GameStyle(game, backgroundImage, backgroundColor, headerImage, borderColor, fontColor);
     }
 }

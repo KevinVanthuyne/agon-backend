@@ -16,10 +16,15 @@ public class Game implements Serializable {
     @PrimaryKeyJoinColumn
     private GameStyle gameStyle;
 
-    public Game(int id, String name, LocalDate startDate) {
+    public Game(int id, String name, LocalDate startDate, GameStyle gameStyle) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
+        this.gameStyle = gameStyle;
+    }
+
+    public Game(int id, String name, LocalDate startDate) {
+        this(id, name, startDate, null);
     }
 
     public Game(int id, String name) {

@@ -13,12 +13,14 @@ public record GameDto(int id,
                 game.getId(),
                 game.getName(),
                 game.getStartDate(),
-                game.getGameStyle() == null ? new GameStyleDto(game.getId()) : new GameStyleDto(game.getGameStyle())
+                new GameStyleDto(game.getGameStyle())
         );
     }
 
     @Override
     public Game buildModel() {
-        return new Game(id, name, startDate);
+        Game game = new Game(id, name, startDate);
+        game.setGameStyle(gameStyle.buildModel(game));
+        return game;
     }
 }
