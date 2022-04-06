@@ -5,11 +5,13 @@ import com.kevinvanthuyne.scored_backend.model.Game;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class GameService {
+    private static final Period GAME_PERIOD = Period.ofMonths(1);
     private final GameDao gameDao;
 
     public GameService(GameDao gameDao) {
@@ -42,16 +44,16 @@ public class GameService {
         firstGame.setStartDate(startDate);
         gameDao.save(firstGame);
 
-        // Update all games to be active for a month, starting from the first game
+        // Update all games to be active for the GAME_PERIOD, starting from the first game
         List<Game> games = gameDao.findAllByOrderByIdAsc();
         for (int i = 0; i < games.size(); i++) {
             Game game = games.get(i);
 
-            // Set the start date to one month after the previous game
+            // Set the start date to the given period after the previous game
             if (i > 0) {
                 Game previousGame = games.get(i - 1);
-                LocalDate oneMonthLater = previousGame.getStartDate().plusMonths(1);
-                game.setStartDate(oneMonthLater);
+                LocalDate nextStartDate = previousGame.getStartDate().plus(GAME_PERIOD);
+                game.setStartDate(nextStartDate);
             }
         }
 
@@ -60,8 +62,31 @@ public class GameService {
 
     public Optional<Game> getActiveGame() {
         LocalDate now = LocalDate.now();
-        // Find the active game of the current month
-        return gameDao.findFirstByStartDateBetween(now.withDayOfMonth(1), now.withDayOfMonth(now.lengthOfMonth()));
+        List<Game> gamesByStartDate = gameDao.findAllByOrderByStartDateAsc();
+
+        for (int i = 0; i < gamesByStartDate.size(); i++) {
+            Game game = gamesByStartDate.get(i);
+
+            // If the first game's start date has not been reached yet, there's no active game
+            if (i == 0 && game.getStartDate().isAfter(now)) {
+                return Optional.empty();
+            }
+
+            // Special handling for the last game since there is no next game to compare it with
+            if (i == gamesByStartDate.size() - 1) {
+                if (game.getStartDate().plus(GAME_PERIOD).isAfter(now)) {
+                    return Optional.of(game);
+                }
+                return Optional.empty();
+            }
+
+            // If the current date sits between this game's start date and the next, this is the active game
+            Game nextGame = gamesByStartDate.get(i + 1);
+            if (game.getStartDate().isEqual(now) || game.getStartDate().isBefore(now) && nextGame.getStartDate().isAfter(now)) {
+                return Optional.of(game);
+            }
+        }
+        return Optional.empty();
     }
 
     public Game updateGame(Game updatedGame) {
