@@ -4,10 +4,10 @@
 
 
 -- Games
-INSERT INTO games (name, start_date)
-VALUES ('Pac Man', '2021-10-01'),
-       ('Bubble Bobble', '2021-11-01'),
-       ('Donkey Kong', '2021-12-01'),
+INSERT INTO games (name)
+VALUES ('Pac Man'),
+       ('Bubble Bobble'),
+       ('Donkey Kong')
 ON CONFLICT DO NOTHING;
 
 -- Game styles
@@ -30,5 +30,5 @@ VALUES
      'black',
      'header-img-url',
      'background-img-url',
-     'pink'),
+     'pink')
 ON CONFLICT DO NOTHING;
