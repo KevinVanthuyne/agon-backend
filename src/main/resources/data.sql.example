@@ -1,0 +1,34 @@
+-- Example data.sql file to inject some initial data into the database instead of having to add each game through the bot.
+--
+-- This example file adds arcade games to the database, but games are generic so almost every type of game can be added.
+
+
+-- Games
+INSERT INTO games (name, start_date)
+VALUES ('Pac Man', '2021-10-01'),
+       ('Bubble Bobble', '2021-11-01'),
+       ('Donkey Kong', '2021-12-01'),
+ON CONFLICT DO NOTHING;
+
+-- Game styles
+INSERT INTO game_styles(game_id, background_color, header_image, background_image, font_color)
+VALUES
+    -- Pac Man
+    (1,
+     'orange',
+     'header-img-url',
+     'background-img-url',
+     'orange'),
+    -- Bubble Bobble
+    (2,
+     'cyan',
+     'header-img-url',
+     'background-img-url',
+     'blue'),
+    -- Donkey Kong
+    (3,
+     'black',
+     'header-img-url',
+     'background-img-url',
+     'pink'),
+ON CONFLICT DO NOTHING;
