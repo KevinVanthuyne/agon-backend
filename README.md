@@ -1,7 +1,8 @@
-# Scored Backend
+# Agon Backend
 
-This is the Spring Boot backend for the [Scored Discord Bot](https://github.com/KevinVanthuyne/discord-competition-bot)
-and Scored UI. It uses a PostgreSQL database to store all data.
+The Spring Boot backend for the Agon competition application. It provides a REST API to interact with it and is mainly used to persist all user, score and game data in a PostgreSQL database.
+
+For an overview of all Agon components take a look at the [Agon Docker Compose repo](https://github.com/KevinVanthuyne/agon-docker-compose).
 
 ## Setup
 
@@ -10,11 +11,11 @@ and Scored UI. It uses a PostgreSQL database to store all data.
 - Install Java SDK 17
 - Rename `application-confidential.properties.example` to `application-confidential.properties` and fill in the necessary data
 - Install PostgreSQL 14 on port 5432
-    - Create a new `scored-db` database
+    - Create a new `agon-db` database
     - Create a new user and fill in the credentials in `application-confidential.properties`
-    - Grant all privileges of `scored-db` to the user (initially user to create all schemes)
-- Run `ScoredBackendApplication.java`
-- After the server has started, revoke all privileges of the `scored-db` user and grant `select, insert, delete, update`
+    - Grant all privileges of `agon-db` to the user (initially user to create all schemes)
+- Run `AgonBackendApplication.java`
+- After the server has started, revoke all privileges of the `agon-db` user and grant `select, insert, delete, update`
 
 ### Docker Setup
 
@@ -24,13 +25,13 @@ maven clean package
 ```
 Build the Docker image:
 ```
-docker build -t kevinvt/scored-backend .
+docker build -t kevinvt/agon-backend .
 ```
-Use Docker Compose to run [scored-docker-compose](https://github.com/KevinVanthuyne/scored-docker-compose) and run the entire application
+Use Docker Compose to run [agon-docker-compose](https://github.com/KevinVanthuyne/agon-docker-compose) and run the entire application.
 
 ## Docker Hub
 
 Push the image to Docker Hub:
 ```
-docker push kevinvt/scored-backend:latest
+docker push kevinvt/agon-backend:latest
 ```

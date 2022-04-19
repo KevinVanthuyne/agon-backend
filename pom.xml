@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kevinvanthuyne</groupId>
-    <artifactId>scored_backend</artifactId>
+    <artifactId>agon_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>competition_backend</name>
-    <description>A Spring Boot backend for running a competition.</description>
+    <name>agon_backend</name>
+    <description>The Spring Boot backend for the Agon application.</description>
     <properties>
         <java.version>17</java.version>
     </properties>
