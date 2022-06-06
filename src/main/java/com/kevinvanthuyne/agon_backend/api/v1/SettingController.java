@@ -2,14 +2,13 @@ package com.kevinvanthuyne.agon_backend.api.v1;
 
 import com.kevinvanthuyne.agon_backend.dto.ChannelSettingDto;
 import com.kevinvanthuyne.agon_backend.model.ChannelSetting;
+import com.kevinvanthuyne.agon_backend.model.Setting;
 import com.kevinvanthuyne.agon_backend.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,12 +29,24 @@ public class SettingController {
     }
 
     @PostMapping(path = "/channel")
-    public ResponseEntity<Void> setScoringChannel(@RequestBody ChannelSettingDto dto) {
+    public ResponseEntity<Void> setChannel(@RequestBody ChannelSettingDto dto) {
         if (!CHANNEL_STRINGS.contains(dto.channel())) {
             return ResponseEntity.badRequest().build();
         }
 
         settingService.setSetting(dto.channel(), dto.channelId());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path = "/channel/{channel}")
+    public ResponseEntity<Setting> getChannel(@PathVariable String channel) {
+        if (!CHANNEL_STRINGS.contains(channel)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Optional<Setting> optionalSetting = settingService.getSetting(channel);
+        if (optionalSetting.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(optionalSetting.get());
     }
 }
