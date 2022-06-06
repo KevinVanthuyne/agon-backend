@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SettingController {
     private static final Set<ChannelSetting> CHANNELS = Set.of(ChannelSetting.SCORING,
                                                                ChannelSetting.HALL_OF_FAME,
-                                                               ChannelSetting.WINNER_ANNOUNCEMENT);
+                                                               ChannelSetting.GAME_ANNOUNCEMENT);
     private static final Set<String> CHANNEL_STRINGS = CHANNELS.stream()
             .map(ChannelSetting::getString)
             .collect(Collectors.toSet());

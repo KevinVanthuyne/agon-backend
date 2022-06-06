@@ -3,7 +3,7 @@ package com.kevinvanthuyne.agon_backend.model;
 public enum ChannelSetting {
     SCORING("scoring"),
     HALL_OF_FAME("hall-of-fame"),
-    WINNER_ANNOUNCEMENT("winner");
+    GAME_ANNOUNCEMENT("game-announcement");
 
     private final String string;
 
