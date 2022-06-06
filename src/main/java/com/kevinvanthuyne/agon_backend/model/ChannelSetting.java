@@ -1,0 +1,17 @@
+package com.kevinvanthuyne.agon_backend.model;
+
+public enum ChannelSetting {
+    SCORING("scoring"),
+    HALL_OF_FAME("hall-of-fame"),
+    WINNER_ANNOUNCEMENT("winner");
+
+    private final String string;
+
+    ChannelSetting(String string) {
+        this.string = string;
+    }
+
+    public String getString() {
+        return string;
+    }
+}

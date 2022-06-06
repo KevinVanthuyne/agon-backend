@@ -14,6 +14,10 @@ public class SettingService {
         this.settingDao = settingDao;
     }
 
+    public Setting setSetting(String key, String value) {
+        return settingDao.save(new Setting(key, value));
+    }
+
     public Optional<Setting> getSetting(String key) {
         return settingDao.findByKey(key);
     }
