@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface GameDao extends CrudRepository<Game, Integer> {
     List<Game> findAllBy();
@@ -16,4 +17,7 @@ public interface GameDao extends CrudRepository<Game, Integer> {
     List<Game> findAllByStartDateLessThanEqual(LocalDate localDate);
 
     Game findFirstByOrderByIdAsc();
+
+    Optional<Game> findFirstByOrderByIdDesc();
+
 }

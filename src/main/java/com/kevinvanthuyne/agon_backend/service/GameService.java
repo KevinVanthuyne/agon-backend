@@ -2,7 +2,6 @@ package com.kevinvanthuyne.agon_backend.service;
 
 import com.kevinvanthuyne.agon_backend.dao.GameDao;
 import com.kevinvanthuyne.agon_backend.model.Game;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +23,8 @@ public class GameService {
     }
 
     public Game addGame(Game game) {
+        Optional<Game> lastGameOpt = gameDao.findFirstByOrderByIdDesc();
+        lastGameOpt.ifPresent(value -> game.setStartDate(value.getStartDate().plus(GAME_PERIOD)));
         return gameDao.save(game);
     }
 
