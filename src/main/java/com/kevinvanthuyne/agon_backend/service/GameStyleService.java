@@ -23,4 +23,8 @@ public class GameStyleService {
     public GameStyle updateGameStyle(GameStyle gameStyle) {
         return gameStyleDao.save(gameStyle);
     }
+
+    public void delete(int gameId) {
+        getStyle(gameId).ifPresent(gameStyleDao::delete);
+    }
 }

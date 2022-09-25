@@ -86,6 +86,12 @@ public class ScoreService {
         return true;
     }
 
+    public void deleteAllScoresOfGame(Game game) {
+        for (Score score : scoreDao.findAllByGame(game)) {
+            deleteScore(score.getId());
+        }
+    }
+
     /**
      * @return The HighScore of each user, without a rank on it yet.
      */

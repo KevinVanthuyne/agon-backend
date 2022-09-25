@@ -2,6 +2,7 @@ package com.kevinvanthuyne.agon_backend.service;
 
 import com.kevinvanthuyne.agon_backend.dao.GameDao;
 import com.kevinvanthuyne.agon_backend.model.Game;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,6 +37,10 @@ public class GameService {
 
     public List<Game> getAllCurrentAndPassedGames() {
         return gameDao.findAllByStartDateLessThanEqual(LocalDate.now());
+    }
+
+    public void deleteGame(int id) {
+        getGame(id).ifPresent((gameDao::delete));
     }
 
     public void setStartDates(LocalDate startDate) {

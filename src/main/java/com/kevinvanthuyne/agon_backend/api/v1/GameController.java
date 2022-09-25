@@ -4,6 +4,8 @@ import com.kevinvanthuyne.agon_backend.dto.GameDto;
 import com.kevinvanthuyne.agon_backend.model.Game;
 import com.kevinvanthuyne.agon_backend.model.GameStyle;
 import com.kevinvanthuyne.agon_backend.service.GameService;
+import com.kevinvanthuyne.agon_backend.service.GameStyleService;
+import com.kevinvanthuyne.agon_backend.service.ScoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,14 @@ import java.util.Optional;
 public class GameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final GameService gameService;
+    private final GameStyleService gameStyleService;
+    private final ScoreService scoreService;
 
     @Autowired
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, GameStyleService gameStyleService, ScoreService scoreService) {
         this.gameService = gameService;
+        this.gameStyleService = gameStyleService;
+        this.scoreService = scoreService;
     }
 
     @GetMapping
@@ -38,6 +44,20 @@ public class GameController {
         if (gameOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(new GameDto(gameOpt.get()));
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<GameDto> deleteGame(@PathVariable int id) {
+        Optional<Game> gameOpt = gameService.getGame(id);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        gameStyleService.delete(id);
+        scoreService.deleteAllScoresOfGame(gameOpt.get());
+        gameService.deleteGame(id);
+
         return ResponseEntity.ok(new GameDto(gameOpt.get()));
     }
 
