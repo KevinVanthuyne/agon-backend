@@ -1,16 +1,16 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
-import com.kevinvanthuyne.agon_backend.model.competition.game.AbstractCompetitionGame;
+import com.kevinvanthuyne.agon_backend.model.competition.division.AbstractDivision;
 
 import java.util.List;
 
 /**
  * Base class for all different competition formats.
  */
-public abstract class AbstractCompetition<G extends AbstractCompetitionGame> {
-    protected List<G> games;
+public abstract class AbstractCompetition<D extends AbstractDivision> {
+    protected List<D> divisions;
 
-    protected AbstractCompetition(List<G> games) {
-        this.games = games;
+    protected AbstractCompetition(List<D> divisions) {
+        this.divisions = divisions;
     }
 }

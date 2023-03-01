@@ -1,6 +1,6 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
-import com.kevinvanthuyne.agon_backend.model.competition.game.PeriodCompetitionGame;
+import com.kevinvanthuyne.agon_backend.model.competition.division.PeriodDivision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Competition format where games are only played for a limited amount of time.
  */
-public class PeriodCompetition extends AbstractCompetition<PeriodCompetitionGame> {
-    public PeriodCompetition(List<PeriodCompetitionGame> games) {
-        super(games);
+public class PeriodCompetition extends AbstractCompetition<PeriodDivision> {
+    public PeriodCompetition(List<PeriodDivision> divisions) {
+        super(divisions);
     }
 
     public PeriodCompetition() {

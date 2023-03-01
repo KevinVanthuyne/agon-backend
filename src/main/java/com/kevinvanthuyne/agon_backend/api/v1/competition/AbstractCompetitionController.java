@@ -1,10 +1,10 @@
 package com.kevinvanthuyne.agon_backend.api.v1.competition;
 
 import com.kevinvanthuyne.agon_backend.model.competition.AbstractCompetition;
-import com.kevinvanthuyne.agon_backend.model.competition.game.AbstractCompetitionGame;
+import com.kevinvanthuyne.agon_backend.model.competition.division.AbstractDivision;
 import com.kevinvanthuyne.agon_backend.service.competition.AbstractCompetitionService;
 
-public abstract class AbstractCompetitionController<G extends AbstractCompetitionGame,
+public abstract class AbstractCompetitionController<G extends AbstractDivision,
         C extends AbstractCompetition<G>,
         S extends AbstractCompetitionService<G, C>> {
     protected S competitionService;
