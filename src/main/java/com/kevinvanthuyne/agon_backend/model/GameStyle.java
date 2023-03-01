@@ -3,7 +3,8 @@ package com.kevinvanthuyne.agon_backend.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "game_styles")
+@Entity
+@Table(name = "game_styles")
 public class GameStyle implements Serializable {
     @Id
     @Column(name = "game_id")

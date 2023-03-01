@@ -2,8 +2,10 @@ package com.kevinvanthuyne.agon_backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     private String id;
