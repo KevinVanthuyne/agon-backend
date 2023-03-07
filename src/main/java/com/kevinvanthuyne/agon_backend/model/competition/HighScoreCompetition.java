@@ -1,9 +1,8 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
-import com.kevinvanthuyne.agon_backend.model.competition.division.HighScoreDivision;
+import com.kevinvanthuyne.agon_backend.model.division.HighScoreDivision;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +10,11 @@ import java.util.List;
  */
 @Entity
 public class HighScoreCompetition extends AbstractCompetition<HighScoreDivision> {
-    public HighScoreCompetition(List<HighScoreDivision> divisions) {
-        super(divisions);
+    public HighScoreCompetition(long id, List<HighScoreDivision> divisions) {
+        super(id, divisions);
     }
 
     public HighScoreCompetition() {
-        this(new ArrayList<>());
+        super();
     }
 }

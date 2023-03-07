@@ -1,8 +1,9 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
-import com.kevinvanthuyne.agon_backend.model.competition.division.AbstractDivision;
+import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,17 +11,32 @@ import java.util.List;
  */
 @Entity
 @Table(name = "competitions")
-public abstract class AbstractCompetition<D extends AbstractDivision> {
+public abstract class AbstractCompetition<Div extends AbstractDivision> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    protected long id;
 
     @OneToMany(targetEntity = AbstractDivision.class)
-    protected List<D> divisions;
+    protected List<Div> divisions;
 
-    protected AbstractCompetition(List<D> divisions) {
+    protected AbstractCompetition(long id, List<Div> divisions) {
+        this.id = id;
         this.divisions = divisions;
     }
 
-    public AbstractCompetition() {}
+    protected AbstractCompetition() {
+        this(-1, new ArrayList<>());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void addDivision(Div division) {
+        this.divisions.add(division);
+    }
+
+    public List<Div> getDivisions() {
+        return divisions;
+    }
 }

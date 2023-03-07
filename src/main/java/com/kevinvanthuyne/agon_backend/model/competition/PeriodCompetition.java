@@ -1,9 +1,8 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
-import com.kevinvanthuyne.agon_backend.model.competition.division.PeriodDivision;
+import com.kevinvanthuyne.agon_backend.model.division.PeriodDivision;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +10,11 @@ import java.util.List;
  */
 @Entity
 public class PeriodCompetition extends AbstractCompetition<PeriodDivision> {
-    public PeriodCompetition(List<PeriodDivision> divisions) {
-        super(divisions);
+    public PeriodCompetition(long id, List<PeriodDivision> divisions) {
+        super(id, divisions);
     }
 
     public PeriodCompetition() {
-        this(new ArrayList<>());
+        super();
     }
 }

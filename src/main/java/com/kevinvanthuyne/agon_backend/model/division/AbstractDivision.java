@@ -1,4 +1,4 @@
-package com.kevinvanthuyne.agon_backend.model.competition.division;
+package com.kevinvanthuyne.agon_backend.model.division;
 
 import com.kevinvanthuyne.agon_backend.model.Game;
 import com.kevinvanthuyne.agon_backend.model.Score;
@@ -23,10 +23,22 @@ public abstract class AbstractDivision {
     @OneToMany
     protected List<Score> scores;
 
-    protected AbstractDivision(Game game, List<Score> scores) {
+
+    protected AbstractDivision(int id, Game game, List<Score> scores) {
+        this.id = id;
         this.game = game;
         this.scores = scores;
     }
 
-    public AbstractDivision() {}
+    protected AbstractDivision() {
+        this(-1, null, List.of());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Game getGame() {
+        return game;
+    }
 }
