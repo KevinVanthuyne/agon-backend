@@ -1,5 +1,6 @@
 package com.kevinvanthuyne.agon_backend.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,7 +10,10 @@ import javax.persistence.Table;
 public class User {
     @Id
     private String id;
+
+    @Column(unique = true)
     private String name;
+
     private String initials;
 
     public User(String id, String name, String initials) {
@@ -18,8 +22,12 @@ public class User {
         this.initials = initials;
     }
 
+    public User(String name) {
+        this("", name, "");
+    }
+
     public User() {
-        this("", "", "");
+        this("");
     }
 
     public String getId() {

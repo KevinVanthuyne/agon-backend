@@ -1,4 +1,4 @@
-package com.kevinvanthuyne.agon_backend.dto;
+package com.kevinvanthuyne.agon_backend.dto.score;
 
 import com.kevinvanthuyne.agon_backend.model.Score;
 
@@ -11,7 +11,7 @@ public record ScoreDto(String id,
                        String userId,
                        String username,
                        String gameInitials,
-                       int gameId) {
+                       int divisionId) {
     public ScoreDto(Score score) {
         this(
                 score.getId().toString(),
@@ -21,7 +21,7 @@ public record ScoreDto(String id,
                 score.getUser().getId(),
                 score.getUser().getName(),
                 score.getUser().getInitials(),
-                score.getGame().getId()
+                score.getDivision().getId()
         );
     }
 }

@@ -1,9 +1,10 @@
-package com.kevinvanthuyne.agon_backend.dto;
+package com.kevinvanthuyne.agon_backend.dto.score;
+
+import com.kevinvanthuyne.agon_backend.dto.division.DivisionDto;
 
 import java.time.LocalDateTime;
 
-public record ScoreAddedDto(ScoreDto score,
-                            GameDto game,
+public record ScoreAddedDto(DivisionDto division,
                             long scoreDelta,
                             int rank,
                             int amountOfHighScores,

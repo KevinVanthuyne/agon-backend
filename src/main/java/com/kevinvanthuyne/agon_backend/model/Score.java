@@ -1,5 +1,7 @@
 package com.kevinvanthuyne.agon_backend.model;
 
+import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -8,7 +10,7 @@ import java.util.UUID;
 @Table(name = "scores")
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
 
     @ManyToOne
@@ -16,27 +18,27 @@ public class Score {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
+    @JoinColumn(name = "division_id")
+    private AbstractDivision division;
 
     private long points;
     private String scoreImageUrl;
     private LocalDateTime timestamp;
 
-    public Score(long points, String scoreImageUrl, User user, Game game, LocalDateTime timestamp) {
+    public Score(User user, AbstractDivision division, long points, String scoreImageUrl, LocalDateTime timestamp) {
+        this.user = user;
+        this.division = division;
         this.points = points;
         this.scoreImageUrl = scoreImageUrl;
-        this.user = user;
-        this.game = game;
         this.timestamp = timestamp;
     }
 
-    public Score(long points, String scoreImageUrl, User user, Game game) {
-        this(points, scoreImageUrl, user, game, LocalDateTime.now());
+    public Score(User user, AbstractDivision division, long points) {
+        this(user, division, points, "", LocalDateTime.now());
     }
 
     public Score() {
-        this(0, "", new User(), new Game(), LocalDateTime.now());
+        this(null, null, 0);
     }
 
     public UUID getId() {
@@ -53,14 +55,6 @@ public class Score {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     public long getPoints() {
@@ -85,5 +79,13 @@ public class Score {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public AbstractDivision getDivision() {
+        return division;
+    }
+
+    public void setDivision(AbstractDivision division) {
+        this.division = division;
     }
 }

@@ -1,7 +1,7 @@
 package com.kevinvanthuyne.agon_backend.dto.division;
 
 import com.kevinvanthuyne.agon_backend.dto.GameDto;
-import com.kevinvanthuyne.agon_backend.dto.ScoreDto;
+import com.kevinvanthuyne.agon_backend.dto.score.ScoreDto;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
 import java.util.List;

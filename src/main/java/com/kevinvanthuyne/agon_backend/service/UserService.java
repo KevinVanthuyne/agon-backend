@@ -23,6 +23,10 @@ public class UserService {
         return userDao.findById(id);
     }
 
+    public Optional<User> getUserByName(String name) {
+        return userDao.findByName(name);
+    }
+
     public List<User> getAllUsers() {
         return userDao.findAllBy();
     }
