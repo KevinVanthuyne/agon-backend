@@ -41,4 +41,8 @@ public abstract class AbstractDivision {
     public Game getGame() {
         return game;
     }
+
+    public List<Score> getScores() {
+        return scores;
+    }
 }

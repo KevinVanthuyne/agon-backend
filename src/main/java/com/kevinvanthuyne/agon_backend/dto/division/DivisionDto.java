@@ -1,9 +1,13 @@
 package com.kevinvanthuyne.agon_backend.dto.division;
 
+import com.kevinvanthuyne.agon_backend.dto.GameDto;
+import com.kevinvanthuyne.agon_backend.dto.ScoreDto;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
-public record DivisionDto(int id, int gameId) {
+import java.util.List;
+
+public record DivisionDto(int id, GameDto game, List<ScoreDto> scores) {
     public DivisionDto(AbstractDivision division) {
-        this(division.getId(), division.getGame().getId());
+        this(division.getId(), new GameDto(division.getGame()), division.getScores().stream().map(ScoreDto::new).toList());
     }
 }

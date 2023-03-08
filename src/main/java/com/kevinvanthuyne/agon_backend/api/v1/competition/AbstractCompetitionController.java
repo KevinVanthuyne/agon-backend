@@ -3,6 +3,7 @@ package com.kevinvanthuyne.agon_backend.api.v1.competition;
 import com.kevinvanthuyne.agon_backend.dao.competition.ICompetitionDao;
 import com.kevinvanthuyne.agon_backend.dao.division.IDivisionDao;
 import com.kevinvanthuyne.agon_backend.dto.division.DivisionDto;
+import com.kevinvanthuyne.agon_backend.dto.division.NewDivisionDto;
 import com.kevinvanthuyne.agon_backend.model.Game;
 import com.kevinvanthuyne.agon_backend.model.competition.AbstractCompetition;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
@@ -60,7 +61,7 @@ public abstract class AbstractCompetitionController<
      * @return The {@link Div} that was added to the competition.
      */
     @PostMapping("/divisions")
-    public ResponseEntity<DivisionDto> addDivision(@RequestBody DivisionDto divisionDto) {
+    public ResponseEntity<DivisionDto> addDivision(@RequestBody NewDivisionDto divisionDto) {
         Optional<Game> gameOpt = gameService.getGame(divisionDto.gameId());
         if (gameOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
