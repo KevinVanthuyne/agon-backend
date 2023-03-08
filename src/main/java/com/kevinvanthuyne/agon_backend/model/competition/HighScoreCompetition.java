@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 public class HighScoreCompetition extends AbstractCompetition<HighScoreDivision> {
-    public HighScoreCompetition(long id, List<HighScoreDivision> divisions) {
+    public HighScoreCompetition(int id, List<HighScoreDivision> divisions) {
         super(id, divisions);
     }
 

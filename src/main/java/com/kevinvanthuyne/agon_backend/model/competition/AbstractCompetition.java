@@ -14,12 +14,12 @@ import java.util.List;
 public abstract class AbstractCompetition<Div extends AbstractDivision> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected int id;
 
     @OneToMany(targetEntity = AbstractDivision.class)
     protected List<Div> divisions;
 
-    protected AbstractCompetition(long id, List<Div> divisions) {
+    protected AbstractCompetition(int id, List<Div> divisions) {
         this.id = id;
         this.divisions = divisions;
     }
@@ -28,7 +28,7 @@ public abstract class AbstractCompetition<Div extends AbstractDivision> {
         this(-1, new ArrayList<>());
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

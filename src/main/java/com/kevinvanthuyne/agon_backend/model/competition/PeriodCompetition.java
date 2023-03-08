@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 public class PeriodCompetition extends AbstractCompetition<PeriodDivision> {
-    public PeriodCompetition(long id, List<PeriodDivision> divisions) {
+    public PeriodCompetition(int id, List<PeriodDivision> divisions) {
         super(id, divisions);
     }
 
