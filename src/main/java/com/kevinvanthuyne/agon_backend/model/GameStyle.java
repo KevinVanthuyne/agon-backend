@@ -1,5 +1,7 @@
 package com.kevinvanthuyne.agon_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,6 +15,7 @@ public class GameStyle implements Serializable {
     @OneToOne
     @MapsId
     @JoinColumn(name = "game_id")
+    @JsonBackReference
     private Game game;
 
     private String backgroundImage;

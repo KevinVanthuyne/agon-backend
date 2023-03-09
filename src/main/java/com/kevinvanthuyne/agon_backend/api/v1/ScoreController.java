@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,16 +43,17 @@ public class ScoreController {
         if (divisionOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        AbstractDivision division = divisionOpt.get();
 
         User user = getOrCreateUser(scoreDto.username());
-        Optional<Score> highestScore = scoreService.getHighestScore(user, divisionOpt.get()); // Retrieve before saving to know previous highest score
+        Optional<Score> highestScore = scoreService.getHighestScore(user, division); // Retrieve before saving to know previous highest score
 
         // Only higher scores than a user's top score can be added
         if (highestScore.isPresent() && scoreDto.points() <= highestScore.get().getPoints()) {
             return ResponseEntity.badRequest().build();
         }
 
-        Score newScore = new Score(user, divisionOpt.get(), scoreDto.points());
+        Score newScore = new Score(user, division, scoreDto.points());
         Score score = scoreService.addScore(newScore);
         LOGGER.info("Score added: {}", score);
 
@@ -63,10 +65,10 @@ public class ScoreController {
         }
 
         ScoreAddedDto scoreAddedDto = new ScoreAddedDto(
-                new DivisionDto(divisionOpt.get()),
+                new DivisionDto(division),
                 scoreDelta,
                 scoreService.getRankOfScore(score),
-                scoreService.getAmountOfScores(divisionOpt.get()),
+                scoreService.getAmountOfScores(division),
                 score.getTimestamp());
 
         return ResponseEntity.ok(scoreAddedDto);
@@ -79,6 +81,14 @@ public class ScoreController {
         User user = userService.addUser(new User(username));
         LOGGER.info("New user added: {}", user);
         return user;
+    }
+
+    /**
+     * @return Map of all enabled division ids and their scores, sorted by highest score first.
+     */
+    @GetMapping("/active")
+    public ResponseEntity<Map<Integer, List<Score>>> getSortedScoresOfActiveDivisions() {
+        return ResponseEntity.ok(scoreService.getSortedScoresOfAllActiveDivisions());
     }
 
     @GetMapping("/{id}")

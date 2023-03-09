@@ -1,5 +1,6 @@
 package com.kevinvanthuyne.agon_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Score {
 
     @ManyToOne
     @JoinColumn(name = "division_id")
+    @JsonBackReference
     private AbstractDivision division;
 
     private long points;

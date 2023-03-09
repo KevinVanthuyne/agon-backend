@@ -28,4 +28,10 @@ public class PeriodDivision extends AbstractDivision {
     public PeriodDivision() {
         this(null);
     }
+
+    @Override
+    public boolean isActive() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(startDateTime) && now.isBefore(endDateTime);
+    }
 }

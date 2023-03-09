@@ -34,6 +34,11 @@ public abstract class AbstractDivision {
         this(-1, null, List.of());
     }
 
+    /**
+     * @return True if the division is active and scores can be posted for it. False if the division is disabled.
+     */
+    public abstract boolean isActive();
+
     public int getId() {
         return id;
     }

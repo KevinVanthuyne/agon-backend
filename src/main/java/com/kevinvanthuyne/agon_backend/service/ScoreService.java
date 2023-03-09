@@ -30,12 +30,29 @@ public class ScoreService {
         return scoreDao.findById(id);
     }
 
+    /**
+     * @return A Map of all active {@link AbstractDivision} ids and their {@link Score}s, sorted by highest score first.
+     */
+    public Map<Integer, List<Score>> getSortedScoresOfAllActiveDivisions() {
+        HashMap<Integer, List<Score>> divisionsAndScores = new HashMap<>();
+
+        for (AbstractDivision division : divisionService.getAllActive()) {
+            List<Score> scores = scoreDao.findAllByDivision(division);
+            List<Score> sortedScores = sortScores(scores);
+            divisionsAndScores.put(division.getId(), sortedScores);
+        }
+        return divisionsAndScores;
+    }
+
+    /**
+     * @return The highest {@link Score} of the given {@link User} in the given {@link AbstractDivision}.
+     */
     public Optional<Score> getHighestScore(User user, AbstractDivision division) {
         return scoreDao.findFirstByUserAndDivisionOrderByPointsDesc(user, division);
     }
 
     /**
-     * @return List of scores for the given division, sorted by most points first.
+     * @return List of given {@link Score}s, sorted by most points first.
      */
     public List<Score> sortScores(List<Score> scores) {
         scores.sort(Comparator.comparingLong(Score::getPoints).reversed());
@@ -53,7 +70,7 @@ public class ScoreService {
     }
 
     /**
-     * @return The amount of score entries in the given division.
+     * @return The amount of {@link Score} entries in the given {@link AbstractDivision}.
      */
     public int getAmountOfScores(AbstractDivision division) {
         return division.getScores().size();

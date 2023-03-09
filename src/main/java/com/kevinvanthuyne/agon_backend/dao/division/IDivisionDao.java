@@ -7,5 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IDivisionDao<Div extends AbstractDivision> extends CrudRepository<Div, Integer> {
+    List<Div> findAll();
+
     List<Div> findAllByGame(Game game);
 }

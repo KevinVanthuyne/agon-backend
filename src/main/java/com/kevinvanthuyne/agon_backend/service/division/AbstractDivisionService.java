@@ -18,7 +18,7 @@ public abstract class AbstractDivisionService<Div extends AbstractDivision, Dao 
     }
 
     /**
-     * Creates a division and saves it to the database;
+     * Creates a {@link Div} and saves it to the database;
      */
     public Div create(Game game) {
         Div division = constructor.apply(game);
@@ -26,21 +26,30 @@ public abstract class AbstractDivisionService<Div extends AbstractDivision, Dao 
     }
 
     /**
-     * @return Optional containing the division for the given id if it exists, or an empty Optional if it does not exist.
+     * @return Optional containing the {@link Div} for the given id if it exists, or an empty Optional if it does not exist.
      */
     public Optional<Div> get(int divisionId) {
         return dao.findById(divisionId);
     }
 
     /**
-     * @return List of divisions linked to the given game.
+     * @return List of {@link Div}s linked to the given {@link Game}.
      */
     public List<Div> getAll(Game game) {
         return dao.findAllByGame(game);
     }
 
     /**
-     * Deletes the given division.
+     * @return List of all active {@link Div}s.
+     */
+    public List<Div> getAllActive() {
+        return dao.findAll().stream()
+                .filter(AbstractDivision::isActive)
+                .toList();
+    }
+
+    /**
+     * Deletes the given {@link Div}.
      */
     public void delete(Div division) {
         dao.delete(division);

@@ -22,4 +22,9 @@ public class HighScoreDivision extends AbstractDivision {
     public HighScoreDivision() {
         this(null);
     }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
 }
