@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -23,7 +24,7 @@ public class User {
     }
 
     public User(String name) {
-        this("", name, "");
+        this(UUID.randomUUID().toString(), name, "");
     }
 
     public User() {

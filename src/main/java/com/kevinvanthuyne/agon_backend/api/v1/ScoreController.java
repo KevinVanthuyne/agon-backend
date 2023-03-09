@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,8 +38,14 @@ public class ScoreController {
         this.divisionService = divisionService;
     }
 
+    /**
+     * Adds the given {@link Score} to the database. Creates a new {@link User} with the given username if it does not
+     * exist yet.
+     *
+     * @return The added score with extra information like score delta.
+     */
     @PostMapping
-    public ResponseEntity<ScoreAddedDto> addScore(@RequestBody AddScoreDto scoreDto) {
+    public ResponseEntity<ScoreAddedDto> addScore(@RequestBody @Valid AddScoreDto scoreDto) {
         Optional<AbstractDivision> divisionOpt = divisionService.get(scoreDto.divisionId());
         if (divisionOpt.isEmpty()) {
             return ResponseEntity.notFound().build();

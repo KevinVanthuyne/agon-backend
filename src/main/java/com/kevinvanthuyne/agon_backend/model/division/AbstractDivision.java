@@ -20,9 +20,8 @@ public abstract class AbstractDivision {
     @JoinColumn(name = "game_id")
     protected Game game;
 
-    @OneToMany
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
     protected List<Score> scores;
-
 
     protected AbstractDivision(int id, Game game, List<Score> scores) {
         this.id = id;

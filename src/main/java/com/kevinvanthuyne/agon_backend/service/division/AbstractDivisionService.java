@@ -2,10 +2,14 @@ package com.kevinvanthuyne.agon_backend.service.division;
 
 import com.kevinvanthuyne.agon_backend.dao.division.IDivisionDao;
 import com.kevinvanthuyne.agon_backend.model.Game;
+import com.kevinvanthuyne.agon_backend.model.Score;
+import com.kevinvanthuyne.agon_backend.model.User;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 public abstract class AbstractDivisionService<Div extends AbstractDivision, Dao extends IDivisionDao<Div>> {
@@ -44,8 +48,19 @@ public abstract class AbstractDivisionService<Div extends AbstractDivision, Dao 
      */
     public List<Div> getAllActive() {
         return dao.findAll().stream()
-                .filter(AbstractDivision::isActive)
+                .filter(Div::isActive)
                 .toList();
+    }
+
+    /**
+     * @return Set of all distinct {@link User}s that have a {@link Score} in the given {@link Div}.
+     */
+    public Set<User> getAllUsersWithScores(Div division) {
+        HashSet<User> distinctUsers = new HashSet<>();
+        for (Score score : division.getScores()) {
+            distinctUsers.add(score.getUser());
+        }
+        return distinctUsers;
     }
 
     /**

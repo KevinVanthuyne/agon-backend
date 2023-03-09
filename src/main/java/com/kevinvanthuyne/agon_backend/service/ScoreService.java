@@ -31,17 +31,32 @@ public class ScoreService {
     }
 
     /**
-     * @return A Map of all active {@link AbstractDivision} ids and their {@link Score}s, sorted by highest score first.
+     * @return A Map of ids for all active {@link AbstractDivision}s and the highest {@link Score} of each {@link User}
+     * in that division, sorted by highest score first.
      */
     public Map<Integer, List<Score>> getSortedScoresOfAllActiveDivisions() {
         HashMap<Integer, List<Score>> divisionsAndScores = new HashMap<>();
 
         for (AbstractDivision division : divisionService.getAllActive()) {
-            List<Score> scores = scoreDao.findAllByDivision(division);
-            List<Score> sortedScores = sortScores(scores);
+            Set<Score> highestScores = getHighestScores(division);
+            List<Score> sortedScores = sortScores(highestScores);
             divisionsAndScores.put(division.getId(), sortedScores);
         }
         return divisionsAndScores;
+    }
+
+    /**
+     * @return (Unsorted) Set of the highest {@link Score} of each {@link User} in the given {@link AbstractDivision}.
+     */
+    public Set<Score> getHighestScores(AbstractDivision division) {
+        HashSet<Score> highestScoresOfUsers = new HashSet<>();
+        Set<User> usersWithScores = divisionService.getAllUsersWithScores(division);
+        for (User user : usersWithScores) {
+            Score highestScore = scoreDao.findFirstByUserAndDivisionOrderByPointsDesc(user, division)
+                    .orElseThrow(() -> new IllegalArgumentException("Only users with a score in this division should be retrieved."));
+            highestScoresOfUsers.add(highestScore);
+        }
+        return highestScoresOfUsers;
     }
 
     /**
@@ -54,9 +69,10 @@ public class ScoreService {
     /**
      * @return List of given {@link Score}s, sorted by most points first.
      */
-    public List<Score> sortScores(List<Score> scores) {
-        scores.sort(Comparator.comparingLong(Score::getPoints).reversed());
-        return scores;
+    public List<Score> sortScores(Collection<Score> scores) {
+        ArrayList<Score> sortedScores = new ArrayList<>(scores);
+        sortedScores.sort(Comparator.comparingLong(Score::getPoints).reversed());
+        return sortedScores;
     }
 
     /**
