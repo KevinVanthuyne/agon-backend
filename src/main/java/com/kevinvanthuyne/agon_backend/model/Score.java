@@ -90,4 +90,16 @@ public class Score {
     public void setDivision(AbstractDivision division) {
         this.division = division;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "id=" + id +
+                ", user=" + user +
+                ", division=" + division +
+                ", points=" + points +
+                ", scoreImageUrl='" + scoreImageUrl + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

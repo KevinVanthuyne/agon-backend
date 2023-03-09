@@ -53,4 +53,13 @@ public class User {
     public void setInitials(String initials) {
         this.initials = initials;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", initials='" + initials + '\'' +
+                '}';
+    }
 }
