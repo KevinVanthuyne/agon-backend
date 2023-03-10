@@ -30,9 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // The necessary endpoints for the UI are publicly accessible
                 .antMatchers(
-                        "/api/v1/game/passed",
+                        "/api/v1/scores",
                         "/api/v1/scores/active",
-                        "/api/v1/game/active",
                         "/api/v1/competitions/*/divisions").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
