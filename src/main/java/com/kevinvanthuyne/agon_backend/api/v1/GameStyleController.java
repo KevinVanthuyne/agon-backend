@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/api/v1/game-style")
+@RequestMapping(path = "/api/v1/game-styles")
 public class GameStyleController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameStyleController.class);
     private final GameStyleService gameStyleService;
