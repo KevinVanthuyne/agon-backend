@@ -1,7 +1,6 @@
 package com.kevinvanthuyne.agon_backend.api.v1;
 
 import com.kevinvanthuyne.agon_backend.dto.division.DivisionDto;
-import com.kevinvanthuyne.agon_backend.dto.score.AddScoreDto;
 import com.kevinvanthuyne.agon_backend.dto.score.ScoreAddedDto;
 import com.kevinvanthuyne.agon_backend.dto.score.ScoreDto;
 import com.kevinvanthuyne.agon_backend.model.Score;
@@ -17,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/scores")
@@ -45,7 +41,7 @@ public class ScoreController {
      * @return The added score with extra information like score delta.
      */
     @PostMapping
-    public ResponseEntity<ScoreAddedDto> addScore(@RequestBody @Valid AddScoreDto scoreDto) {
+    public ResponseEntity<ScoreAddedDto> addScore(@RequestBody @Valid ScoreDto scoreDto) {
         Optional<AbstractDivision> divisionOpt = divisionService.get(scoreDto.divisionId());
         if (divisionOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -94,8 +90,17 @@ public class ScoreController {
      * @return Map of all enabled division ids and their scores, sorted by highest score first.
      */
     @GetMapping("/active")
-    public ResponseEntity<Map<Integer, List<Score>>> getSortedScoresOfActiveDivisions() {
-        return ResponseEntity.ok(scoreService.getSortedScoresOfAllActiveDivisions());
+    public ResponseEntity<Map<Integer, List<ScoreDto>>> getSortedScoresOfActiveDivisions() {
+        Map<Integer, List<ScoreDto>> scoreDtos = new HashMap<>();
+        Map<Integer, List<Score>> scores = scoreService.getSortedScoresOfAllActiveDivisions();
+
+        for (int divisionId : scores.keySet()) {
+            List<Score> scoresOfDivision = scores.get(divisionId);
+            List<ScoreDto> scoreDtosOfDivision = scoresOfDivision.stream().map(ScoreDto::new).toList();
+            scoreDtos.put(divisionId, scoreDtosOfDivision);
+        }
+
+        return ResponseEntity.ok(scoreDtos);
     }
 
     @GetMapping("/{id}")

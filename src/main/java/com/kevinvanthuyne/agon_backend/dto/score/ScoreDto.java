@@ -2,16 +2,19 @@ package com.kevinvanthuyne.agon_backend.dto.score;
 
 import com.kevinvanthuyne.agon_backend.model.Score;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public record ScoreDto(String id,
-                       long points,
+                       @Min(0) @Max(Long.MAX_VALUE) long points,
                        String scoreImageUrl,
                        LocalDateTime timestamp,
                        String userId,
-                       String username,
+                       @NotBlank String username,
                        String gameInitials,
-                       int divisionId) {
+                       @Min(0) @Max(Integer.MAX_VALUE) int divisionId) {
     public ScoreDto(Score score) {
         this(
                 score.getId().toString(),
