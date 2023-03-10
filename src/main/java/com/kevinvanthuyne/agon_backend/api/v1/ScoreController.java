@@ -41,10 +41,10 @@ public class ScoreController {
      * @return The added score with extra information like score delta.
      */
     @PostMapping
-    public ResponseEntity<ScoreAddedDto> addScore(@RequestBody @Valid ScoreDto scoreDto) {
+    public ResponseEntity<?> addScore(@RequestBody @Valid ScoreDto scoreDto) {
         Optional<AbstractDivision> divisionOpt = divisionService.get(scoreDto.divisionId());
         if (divisionOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("Division could not be found.");
         }
         AbstractDivision division = divisionOpt.get();
 
@@ -53,7 +53,7 @@ public class ScoreController {
 
         // Only higher scores than a user's top score can be added
         if (highestScore.isPresent() && scoreDto.points() <= highestScore.get().getPoints()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("New score can only be higher than the user's current high score.");
         }
 
         Score newScore = new Score(user, division, scoreDto.points());
