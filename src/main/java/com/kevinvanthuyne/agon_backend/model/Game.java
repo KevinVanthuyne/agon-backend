@@ -2,7 +2,6 @@ package com.kevinvanthuyne.agon_backend.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "games")
@@ -11,25 +10,19 @@ public class Game implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private LocalDate startDate;
 
     @OneToOne(mappedBy = "game", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private GameStyle gameStyle;
 
-    public Game(int id, String name, LocalDate startDate, GameStyle gameStyle) {
+    public Game(int id, String name, GameStyle gameStyle) {
         this.id = id;
         this.name = name;
-        this.startDate = startDate;
         this.gameStyle = gameStyle;
     }
 
-    public Game(int id, String name, LocalDate startDate) {
-        this(id, name, startDate, null);
-    }
-
     public Game(int id, String name) {
-        this(id, name, LocalDate.EPOCH);
+        this(id, name, null);
     }
 
     public Game(String name) {
@@ -54,14 +47,6 @@ public class Game implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
     }
 
     public GameStyle getGameStyle() {

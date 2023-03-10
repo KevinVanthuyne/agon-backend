@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/api/v1/game-styles")
+@RequestMapping("/api/v1/game-styles")
 public class GameStyleController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameStyleController.class);
     private final GameStyleService gameStyleService;
@@ -22,7 +22,7 @@ public class GameStyleController {
         this.gameStyleService = gameStyleService;
     }
 
-    @GetMapping(path = "/{gameId}")
+    @GetMapping("/{gameId}")
     public ResponseEntity<GameStyleDto> getGameStyle(@PathVariable int gameId) {
         Optional<GameStyle> gameStyleOpt = gameStyleService.getStyle(gameId);
         if (gameStyleOpt.isEmpty()) {

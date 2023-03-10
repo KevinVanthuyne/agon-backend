@@ -38,48 +38,6 @@ public class GameController {
         return ResponseEntity.ok(games);
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<GameDto> getGame(@PathVariable int id) {
-        Optional<Game> gameOpt = gameService.getGame(id);
-        if (gameOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new GameDto(gameOpt.get()));
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<GameDto> deleteGame(@PathVariable int id) {
-        Optional<Game> gameOpt = gameService.getGame(id);
-        if (gameOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        gameStyleService.delete(id);
-        scoreService.deleteAllScoresOfGame(gameOpt.get());
-        gameService.deleteGame(id);
-
-        return ResponseEntity.ok(new GameDto(gameOpt.get()));
-    }
-
-    // Publicly accessible for the UI
-    @GetMapping(path = "/passed")
-    public ResponseEntity<List<GameDto>> getAllCurrentAndPassedGames() {
-        List<GameDto> games = gameService.getAllCurrentAndPassedGames().stream()
-                .map(GameDto::new)
-                .toList();
-        return ResponseEntity.ok(games);
-    }
-
-    // Publicly accessible for the UI
-    @GetMapping(path = "/active")
-    public ResponseEntity<GameDto> getActiveGame() {
-        Optional<Game> gameOpt = gameService.getActiveGame();
-        if (gameOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new GameDto(gameOpt.get()));
-    }
-
     @PostMapping
     public ResponseEntity<GameDto> addNewGame(@RequestBody GameDto gameDto) {
         Game game = new Game(gameDto.name());
@@ -101,5 +59,28 @@ public class GameController {
         Game updatedGame = gameService.updateGame(game);
         LOGGER.info("Updated updatedGame: {}", updatedGame);
         return ResponseEntity.ok(new GameDto(updatedGame));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GameDto> getGame(@PathVariable int id) {
+        Optional<Game> gameOpt = gameService.getGame(id);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new GameDto(gameOpt.get()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GameDto> deleteGame(@PathVariable int id) {
+        Optional<Game> gameOpt = gameService.getGame(id);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        gameStyleService.delete(id);
+        scoreService.deleteAllScoresOfGame(gameOpt.get());
+        gameService.deleteGame(id);
+
+        return ResponseEntity.ok(new GameDto(gameOpt.get()));
     }
 }
