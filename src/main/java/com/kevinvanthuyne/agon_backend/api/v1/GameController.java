@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/api/v1/games")
+@RequestMapping("/api/v1/games")
 public class GameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final GameService gameService;

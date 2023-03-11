@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UserDao extends CrudRepository<User, String> {
     List<User> findAllBy();
 
-    Optional<User> findByName(String name);
+    Optional<User> findByNameIgnoreCase(String name);
 }

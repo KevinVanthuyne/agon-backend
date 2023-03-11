@@ -1,5 +1,7 @@
 package com.kevinvanthuyne.agon_backend.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,19 +14,27 @@ public class User {
     @Id
     private String id;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 32)
+    @Length(min = 3, max = 32)
     private String name;
 
+    @Column(length = 3)
     private String initials;
 
-    public User(String id, String name, String initials) {
+    // Can be null for non-admin users
+    @Column(length = 128)
+    @Length(min = 8, max = 128)
+    private String password;
+
+    public User(String id, String name, String initials, String password) {
         this.id = id;
         this.name = name;
         this.initials = initials;
+        this.password = password;
     }
 
     public User(String name) {
-        this(UUID.randomUUID().toString(), name, "");
+        this(UUID.randomUUID().toString(), name, "", null);
     }
 
     public User() {
@@ -53,6 +63,14 @@ public class User {
 
     public void setInitials(String initials) {
         this.initials = initials;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

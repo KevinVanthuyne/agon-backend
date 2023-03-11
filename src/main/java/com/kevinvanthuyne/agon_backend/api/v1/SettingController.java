@@ -28,7 +28,7 @@ public class SettingController {
         this.settingService = settingService;
     }
 
-    @PostMapping(path = "/channels")
+    @PostMapping("/channels")
     public ResponseEntity<Void> setChannel(@RequestBody ChannelSettingDto dto) {
         if (!CHANNEL_STRINGS.contains(dto.channel())) {
             return ResponseEntity.badRequest().build();
@@ -38,7 +38,7 @@ public class SettingController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "/channels/{channel}")
+    @GetMapping("/channels/{channel}")
     public ResponseEntity<Setting> getChannel(@PathVariable String channel) {
         if (!CHANNEL_STRINGS.contains(channel)) {
             return ResponseEntity.badRequest().build();

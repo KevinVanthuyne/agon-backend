@@ -1,10 +1,10 @@
 package com.kevinvanthuyne.agon_backend.dto.score;
 
 import com.kevinvanthuyne.agon_backend.model.Score;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public record ScoreDto(String id,
@@ -12,7 +12,7 @@ public record ScoreDto(String id,
                        String scoreImageUrl,
                        LocalDateTime timestamp,
                        String userId,
-                       @NotBlank String username,
+                       @Length(min = 3, max = 64) String username,
                        String gameInitials,
                        @Min(0) @Max(Integer.MAX_VALUE) int divisionId) {
     public ScoreDto(Score score) {

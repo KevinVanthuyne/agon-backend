@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,16 +26,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .httpBasic()
+                .and()
+                .cors()
+                .and()
+                .logout().logoutUrl("/api/v1/auth/logout")
+                .and()
                 .authorizeRequests()
                 // The necessary endpoints for the UI are publicly accessible
                 .antMatchers(
+                        "/api/v1/user",
                         "/api/v1/scores",
                         "/api/v1/scores/active",
-                        "/api/v1/competitions/*/divisions").permitAll()
+                        "/api/v1/competitions/*/divisions"
+                ).permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic()
-                .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and()
+                // TODO fix fucking CSRF
+                .csrf().disable();
+//                .and()
+//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .ignoringAntMatchers("/api/v1/auth/logout");
     }
 
     @Bean
@@ -55,4 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }

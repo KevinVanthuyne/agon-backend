@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/api/v1/scores")
+@RequestMapping("/api/v1/scores")
 public class ScoreController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScoreController.class);

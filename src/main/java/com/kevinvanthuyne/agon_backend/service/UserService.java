@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public Optional<User> getUserByName(String name) {
-        return userDao.findByName(name);
+        return userDao.findByNameIgnoreCase(name);
     }
 
     public List<User> getAllUsers() {
