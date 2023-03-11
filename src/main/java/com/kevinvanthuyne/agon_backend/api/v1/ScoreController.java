@@ -87,7 +87,7 @@ public class ScoreController {
     }
 
     /**
-     * @return Map of all enabled division ids and their scores, sorted by highest score first.
+     * @return Map of all enabled division ids and the highest scores per user, sorted by highest score first.
      */
     @GetMapping("/active")
     public ResponseEntity<Map<Integer, List<ScoreDto>>> getSortedScoresOfActiveDivisions() {
@@ -122,21 +122,22 @@ public class ScoreController {
         return ResponseEntity.ok(new ScoreDto(scoreOpt.get()));
     }
 
-    // TODO refactor to division?
-//    @GetMapping("/game/{gameId}/user/{userId}")
-//    public ResponseEntity<List<ScoreDto>> getScoresOfUserForGame(@PathVariable int gameId, @PathVariable String userId) {
-//        Optional<Game> gameOpt = divisionService.getGame(gameId);
-//        Optional<User> userOpt = userService.getUser(userId);
-//        if (gameOpt.isEmpty() || userOpt.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        List<ScoreDto> scores = scoreService.getScores(gameOpt.get(), userOpt.get()).stream()
-//                .map(ScoreDto::new)
-//                .toList();
-//
-//        return ResponseEntity.ok(scores);
-//    }
+    /**
+     * @return {@link List} of all {@link ScoreDto}s for the given division or an error message {@link String} if something goes wrong.
+     */
+    @GetMapping("/divisions/{divisionId}")
+    public ResponseEntity<?> getAllScoresOfDivision(@PathVariable int divisionId) {
+        Optional<AbstractDivision> divisionOptional = divisionService.get(divisionId);
+        if (divisionOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("Could not find division.");
+        }
+
+        List<ScoreDto> scores = divisionOptional.get().getScores().stream()
+                .map(ScoreDto::new)
+                .toList();
+
+        return ResponseEntity.ok(scores);
+    }
 
     // TODO still needed?
     @GetMapping("/user/{userId}")
