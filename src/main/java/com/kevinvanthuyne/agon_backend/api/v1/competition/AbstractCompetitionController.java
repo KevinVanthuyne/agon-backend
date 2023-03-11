@@ -13,9 +13,7 @@ import com.kevinvanthuyne.agon_backend.service.division.AbstractDivisionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +69,20 @@ public abstract class AbstractCompetitionController<
         LOGGER.info("Added division {} to competition {}.", division.getId(), competition.getId());
 
         return ResponseEntity.ok(new DivisionDto(division));
+    }
+
+    /**
+     * Deletes the {@link Div} with the given id;
+     *
+     * @return Nothing if delete was successful, an error message if the division could not be found.
+     */
+    @DeleteMapping("/divisions/{divisionId}")
+    public ResponseEntity<?> deleteDivision(@PathVariable int divisionId) {
+        Optional<Div> divisionOpt = divisionService.get(divisionId);
+        if (divisionOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Division could not be found.");
+        }
+        divisionService.delete(divisionOpt.get());
+        return ResponseEntity.ok().build();
     }
 }
