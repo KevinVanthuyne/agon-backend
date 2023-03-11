@@ -6,6 +6,7 @@ import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -39,5 +40,9 @@ public abstract class AbstractCompetitionService<
         Comp competition = this.get();
         competition.addDivision(division);
         return dao.save(competition); // Update division change in database
+    }
+
+    public Optional<Comp> getCompetitionContainingDivision(Div division) {
+        return dao.findFirstByDivisionsOrderById(division);
     }
 }

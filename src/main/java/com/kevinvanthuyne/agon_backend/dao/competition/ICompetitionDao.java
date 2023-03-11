@@ -11,4 +11,6 @@ public interface ICompetitionDao<
         Comp extends AbstractCompetition<Div>> extends CrudRepository<Comp, Long> {
 
     Optional<Comp> findFirstByOrderById();
+
+    Optional<Comp> findFirstByDivisionsOrderById(Div division);
 }

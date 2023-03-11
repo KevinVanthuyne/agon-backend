@@ -82,7 +82,11 @@ public abstract class AbstractCompetitionController<
         if (divisionOpt.isEmpty()) {
             return ResponseEntity.badRequest().body("Division could not be found.");
         }
-        divisionService.delete(divisionOpt.get());
+        Div division = divisionOpt.get();
+        Comp competition = competitionService.getCompetitionContainingDivision(division).orElseThrow();
+        competition.removeDivision(division);
+        divisionService.delete(division);
+        LOGGER.info("Deleted division {}", division);
         return ResponseEntity.ok().build();
     }
 }

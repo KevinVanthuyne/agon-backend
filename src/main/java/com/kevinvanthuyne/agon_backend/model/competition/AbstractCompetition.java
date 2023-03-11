@@ -39,4 +39,16 @@ public abstract class AbstractCompetition<Div extends AbstractDivision> {
     public List<Div> getDivisions() {
         return divisions;
     }
+
+    public void removeDivision(Div division) {
+        this.divisions.remove(division);
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractCompetition{" +
+                "id=" + id +
+                ", divisions=" + divisions +
+                '}';
+    }
 }

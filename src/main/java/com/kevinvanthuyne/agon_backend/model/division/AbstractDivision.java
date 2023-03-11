@@ -49,4 +49,13 @@ public abstract class AbstractDivision {
     public List<Score> getScores() {
         return scores;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractDivision{" +
+                "id=" + id +
+                ", game=" + game +
+                ", scores=" + scores +
+                '}';
+    }
 }
