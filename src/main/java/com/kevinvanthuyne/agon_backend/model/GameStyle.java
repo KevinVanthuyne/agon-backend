@@ -89,4 +89,17 @@ public class GameStyle implements Serializable {
     public void setFontColor(String fontColor) {
         this.fontColor = fontColor;
     }
+
+    @Override
+    public String toString() {
+        return "GameStyle{" +
+                "gameId=" + gameId +
+                ", game=" + game +
+                ", backgroundImage='" + backgroundImage + '\'' +
+                ", backgroundColor='" + backgroundColor + '\'' +
+                ", headerImage='" + headerImage + '\'' +
+                ", borderColor='" + borderColor + '\'' +
+                ", fontColor='" + fontColor + '\'' +
+                '}';
+    }
 }
