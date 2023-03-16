@@ -96,7 +96,7 @@ public class Score {
         return "Score{" +
                 "id=" + id +
                 ", user=" + user +
-                ", division=" + division +
+                ", division=" + division.getId() +
                 ", points=" + points +
                 ", scoreImageUrl='" + scoreImageUrl + '\'' +
                 ", timestamp=" + timestamp +
