@@ -9,20 +9,25 @@ public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
 
     @OneToOne(mappedBy = "game", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private GameStyle gameStyle;
 
-    public Game(int id, String name, GameStyle gameStyle) {
+    private String name;
+    private String description;
+    private GameCategory category;
+
+    public Game(int id, String name, GameStyle gameStyle, String description, GameCategory category) {
         this.id = id;
         this.name = name;
         this.gameStyle = gameStyle;
+        this.description = description;
+        this.category = category;
     }
 
     public Game(int id, String name) {
-        this(id, name, null);
+        this(id, name, null, null, null);
     }
 
     public Game(String name) {
@@ -55,6 +60,22 @@ public class Game implements Serializable {
 
     public void setGameStyle(GameStyle gameStyle) {
         this.gameStyle = gameStyle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public GameCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(GameCategory category) {
+        this.category = category;
     }
 
     @Override

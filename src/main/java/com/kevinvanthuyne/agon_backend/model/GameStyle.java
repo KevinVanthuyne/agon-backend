@@ -23,8 +23,9 @@ public class GameStyle implements Serializable {
     private String headerImage;
     private String borderColor;
     private String fontColor;
+    private String cabinetImage;
 
-    public GameStyle(Game game, String backgroundImage, String backgroundColor, String headerImage, String borderColor, String fontColor) {
+    public GameStyle(Game game, String backgroundImage, String backgroundColor, String headerImage, String borderColor, String fontColor, String cabinetImage) {
         this.game = game;
         this.gameId = game.getId();
         this.backgroundImage = backgroundImage;
@@ -32,10 +33,11 @@ public class GameStyle implements Serializable {
         this.headerImage = headerImage;
         this.borderColor = borderColor;
         this.fontColor = fontColor;
+        this.cabinetImage = cabinetImage;
     }
 
     public GameStyle(Game game) {
-        this(game, "", "gray", "", "", "orange");
+        this(game, "", "gray", "", "", "orange", "");
     }
 
     public GameStyle() {
@@ -90,6 +92,14 @@ public class GameStyle implements Serializable {
         this.fontColor = fontColor;
     }
 
+    public String getCabinetImage() {
+        return cabinetImage;
+    }
+
+    public void setCabinetImage(String cabinetImage) {
+        this.cabinetImage = cabinetImage;
+    }
+
     @Override
     public String toString() {
         return "GameStyle{" +
@@ -100,6 +110,7 @@ public class GameStyle implements Serializable {
                 ", headerImage='" + headerImage + '\'' +
                 ", borderColor='" + borderColor + '\'' +
                 ", fontColor='" + fontColor + '\'' +
+                ", cabinetImage='" + cabinetImage + '\'' +
                 '}';
     }
 }
