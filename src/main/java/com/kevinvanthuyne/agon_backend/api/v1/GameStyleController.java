@@ -55,6 +55,9 @@ public class GameStyleController {
         if (gameStyleDto.fontColor() != null) {
             oldGameStyle.setFontColor(gameStyleDto.fontColor());
         }
+        if (gameStyleDto.cabinetImage() != null) {
+            oldGameStyle.setCabinetImage(gameStyleDto.cabinetImage());
+        }
 
         GameStyle updatedGameStyle = gameStyleService.updateGameStyle(oldGameStyle);
         LOGGER.info("Updated game style: {}", updatedGameStyle);
