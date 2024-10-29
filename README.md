@@ -19,6 +19,10 @@ For an overview of all Agon components take a look at the [Agon Docker Compose r
 
 ### Docker Setup
 
+#### With Compose
+
+With Compose, all applications will be run at the same time from Docker images.
+
 Build the app with Maven (with skip tests):
 ```
 maven clean package
@@ -28,6 +32,11 @@ Build the Docker image:
 docker build -t kevinvt/agon-backend .
 ```
 Use Docker Compose to run [agon-docker-compose](https://github.com/KevinVanthuyne/agon-docker-compose) and run the entire application.
+
+#### Without Compose
+
+There's a Dockerfile in the `agon-docker-compose` repo for development that will spin up a PostgreSQL database so 
+there's no need to install it locally.
 
 ## Docker Hub
 
