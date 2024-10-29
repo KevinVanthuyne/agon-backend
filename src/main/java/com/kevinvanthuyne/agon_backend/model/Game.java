@@ -83,6 +83,7 @@ public class Game implements Serializable {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

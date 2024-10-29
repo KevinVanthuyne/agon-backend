@@ -55,6 +55,7 @@ public class GameController {
         }
         Game game = gameOpt.get();
         game.setName(gameDto.name());
+        game.setDescription(gameDto.description());
 
         Game updatedGame = gameService.updateGame(game);
         LOGGER.info("Updated updatedGame: {}", updatedGame);
