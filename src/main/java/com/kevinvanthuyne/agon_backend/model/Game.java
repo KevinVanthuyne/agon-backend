@@ -14,8 +14,10 @@ public class Game implements Serializable {
     @PrimaryKeyJoinColumn
     private GameStyle gameStyle;
 
-    private String name;
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    private String name;
     private GameCategory category;
 
     public Game(int id, String name, GameStyle gameStyle, String description, GameCategory category) {
@@ -24,6 +26,10 @@ public class Game implements Serializable {
         this.gameStyle = gameStyle;
         this.description = description;
         this.category = category;
+    }
+
+    public Game(String name, String description, GameCategory category) {
+        this(-1, name, null, description, category);
     }
 
     public Game(int id, String name) {
