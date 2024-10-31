@@ -50,12 +50,29 @@ public class GameController {
     @PutMapping
     public ResponseEntity<GameDto> updateGame(@RequestBody GameDto gameDto) {
         Optional<Game> gameOpt = gameService.getGame(gameDto.id());
-        if (gameOpt.isEmpty()) {
+         if (gameOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Game game = gameOpt.get();
-        game.setName(gameDto.name());
-        game.setDescription(gameDto.description());
+        // TODO yet another horrendous update
+        if (gameDto.name() != null) {
+            game.setName(gameDto.name());
+        }
+        if (gameDto.description() != null) {
+            game.setDescription(gameDto.description());
+        }
+        if (gameDto.collectionHistory() != null) {
+            game.setCollectionHistory(gameDto.collectionHistory());
+        }
+        if (gameDto.year() != null) {
+            game.setYear(gameDto.year());
+        }
+        if (gameDto.status() != null) {
+            game.setStatus(gameDto.status());
+        }
+        if (gameDto.category() != null) {
+            game.setCategory(gameDto.category());
+        }
 
         Game updatedGame = gameService.updateGame(game);
         LOGGER.info("Updated updatedGame: {}", updatedGame);
