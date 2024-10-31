@@ -1,5 +1,6 @@
 package com.kevinvanthuyne.agon_backend.model.competition;
 
+import com.kevinvanthuyne.agon_backend.model.Game;
 import com.kevinvanthuyne.agon_backend.model.division.AbstractDivision;
 
 import javax.persistence.*;
@@ -42,6 +43,10 @@ public abstract class AbstractCompetition<Div extends AbstractDivision> {
 
     public void removeDivision(Div division) {
         this.divisions.remove(division);
+    }
+
+    public List<Div> getDivisionsByGame(Game game) {
+        return divisions.stream().filter(division -> division.getGame().equals(game)).toList();
     }
 
     @Override

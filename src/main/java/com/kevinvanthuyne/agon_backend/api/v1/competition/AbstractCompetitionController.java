@@ -89,4 +89,24 @@ public abstract class AbstractCompetitionController<
         LOGGER.info("Deleted division {}", division);
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * @param gameId The id of the game to retrieve divisions for.
+     * @param active True only returns active divisions, false or omitted returns all divisions.
+     * @return The list of divisions for the given game.
+     */
+    @GetMapping("/divisions/game/{gameId}")
+    public ResponseEntity<?> getDivisionsByGame(@PathVariable int gameId,
+                                                @RequestParam(required = false, defaultValue = "false") Boolean active) {
+        Optional<Game> gameOpt = gameService.getGame(gameId);
+        if (gameOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Game could not be found");
+        }
+        List<Div> divisions = competitionService.get().getDivisionsByGame(gameOpt.get());
+        List<DivisionDto> divisionDtos = divisions.stream()
+                .filter(div -> !active || div.isActive())
+                .map(DivisionDto::new)
+                .toList();
+        return ResponseEntity.ok(divisionDtos);
+    }
 }

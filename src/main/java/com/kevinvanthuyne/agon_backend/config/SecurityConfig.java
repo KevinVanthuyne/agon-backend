@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/games/**",
                         "/api/v1/scores",
                         "/api/v1/scores/active",
-                        "/api/v1/competitions/*/divisions"
+                        "/api/v1/competitions/*/divisions",
+                        "/api/v1/competitions/*/divisions/game/*"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
