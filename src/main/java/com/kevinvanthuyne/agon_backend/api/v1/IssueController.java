@@ -37,7 +37,8 @@ public class IssueController {
                         new IssueDto(issue.getId(),
                                 issue.getGame().getId(),
                                 issue.getUser().getName(),
-                                issue.getDescription()))
+                                issue.getDescription(),
+                                issue.getTimestamp()))
                 .toList());
     }
 
