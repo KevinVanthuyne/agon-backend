@@ -10,12 +10,10 @@ import com.kevinvanthuyne.agon_backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +28,17 @@ public class IssueController {
         this.issueService = issueService;
         this.userService = userService;
         this.gameService = gameService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<IssueDto>> getAllIssues() {
+        return ResponseEntity.ok(issueService.getAllIssues().stream()
+                .map(issue ->
+                        new IssueDto(issue.getId(),
+                                issue.getGame().getId(),
+                                issue.getUser().getName(),
+                                issue.getDescription()))
+                .toList());
     }
 
     @PostMapping
