@@ -3,38 +3,42 @@ package com.kevinvanthuyne.agon_backend.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * TODO to be implemented
- */
 @Entity
 @Table(name = "issues")
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private LocalDateTime timestamp;
 
-    public Issue(Game game, String description, LocalDateTime timestamp) {
+    public Issue(Game game, User user, String description, LocalDateTime timestamp) {
         this.game = game;
+        this.user = user;
         this.description = description;
         this.timestamp = timestamp;
     }
 
     public Issue() {
-        this(null, "", LocalDateTime.now());
+        this(null, null, "", LocalDateTime.now());
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,6 +48,14 @@ public class Issue {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {
@@ -60,5 +72,16 @@ public class Issue {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", game=" + game +
+                ", user=" + user +
+                ", description='" + description + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

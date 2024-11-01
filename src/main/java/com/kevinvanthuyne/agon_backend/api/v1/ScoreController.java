@@ -48,7 +48,7 @@ public class ScoreController {
         }
         AbstractDivision division = divisionOpt.get();
 
-        User user = getOrCreateUser(scoreDto.username());
+        User user = userService.getOrCreateUser(scoreDto.username());
         Optional<Score> highestScore = scoreService.getHighestScore(user, division); // Retrieve before saving to know previous highest score
 
         // Only higher scores than a user's top score can be added
@@ -75,15 +75,6 @@ public class ScoreController {
                 score.getTimestamp());
 
         return ResponseEntity.ok(scoreAddedDto);
-    }
-
-    private User getOrCreateUser(String username) {
-        Optional<User> userOpt = userService.getUserByName(username);
-        if (userOpt.isPresent()) return userOpt.get();
-
-        User user = userService.addUser(new User(username));
-        LOGGER.info("New user added: {}", user);
-        return user;
     }
 
     /**
