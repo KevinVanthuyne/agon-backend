@@ -12,7 +12,7 @@ public record ScoreDto(String id,
                        String scoreImageUrl,
                        LocalDateTime timestamp,
                        String userId,
-                       @Length(min = 3, max = 64) String username,
+                       @Length(min = 3, max = 32) String username,
                        String gameInitials,
                        @Min(0) @Max(Integer.MAX_VALUE) int divisionId) {
     public ScoreDto(Score score) {
