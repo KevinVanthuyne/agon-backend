@@ -22,16 +22,18 @@ public class Issue {
     private String description;
 
     private LocalDateTime timestamp;
+    private IssueStatus status;
 
-    public Issue(Game game, User user, String description, LocalDateTime timestamp) {
+    public Issue(Game game, User user, String description, LocalDateTime timestamp, IssueStatus status) {
         this.game = game;
         this.user = user;
         this.description = description;
         this.timestamp = timestamp;
+        this.status = status;
     }
 
     public Issue() {
-        this(null, null, "", LocalDateTime.now());
+        this(null, null, "", LocalDateTime.now(), IssueStatus.NEEDS_TRIAGE);
     }
 
     public Long getId() {
@@ -74,6 +76,14 @@ public class Issue {
         this.timestamp = timestamp;
     }
 
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Issue{" +
@@ -82,6 +92,7 @@ public class Issue {
                 ", user=" + user +
                 ", description='" + description + '\'' +
                 ", timestamp=" + timestamp +
+                ", status=" + status +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package com.kevinvanthuyne.agon_backend.api.v1;
 import com.kevinvanthuyne.agon_backend.dto.IssueDto;
 import com.kevinvanthuyne.agon_backend.model.Game;
 import com.kevinvanthuyne.agon_backend.model.Issue;
+import com.kevinvanthuyne.agon_backend.model.IssueStatus;
 import com.kevinvanthuyne.agon_backend.model.User;
 import com.kevinvanthuyne.agon_backend.service.GameService;
 import com.kevinvanthuyne.agon_backend.service.IssueService;
@@ -38,7 +39,8 @@ public class IssueController {
                                 issue.getGame().getId(),
                                 issue.getUser().getName(),
                                 issue.getDescription(),
-                                issue.getTimestamp()))
+                                issue.getTimestamp(),
+                                issue.getStatus()))
                 .toList());
     }
 
@@ -50,7 +52,7 @@ public class IssueController {
         }
 
         User user = userService.getOrCreateUser(dto.username());
-        Issue issue = new Issue(gameOpt.get(), user, dto.description(), LocalDateTime.now());
+        Issue issue = new Issue(gameOpt.get(), user, dto.description(), LocalDateTime.now(), IssueStatus.NEEDS_TRIAGE);
         issueService.addIssue(issue);
         LOGGER.info("Added issue: {}", issue);
 
