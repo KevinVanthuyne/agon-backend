@@ -5,6 +5,7 @@ import com.kevinvanthuyne.agon_backend.model.Issue;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IssueService {
@@ -19,6 +20,14 @@ public class IssueService {
     }
 
     public Issue addIssue(Issue issue) {
+        return issueDao.save(issue);
+    }
+
+    public Optional<Issue> getIssue(Long id) {
+        return  issueDao.findById(id);
+    }
+
+    public Issue updateIssue(Issue issue) {
         return issueDao.save(issue);
     }
 }

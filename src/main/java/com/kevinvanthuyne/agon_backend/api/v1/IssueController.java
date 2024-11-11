@@ -58,4 +58,22 @@ public class IssueController {
 
         return ResponseEntity.ok(issue);
     }
+
+    @PutMapping
+    public ResponseEntity<?> updateIssue(@RequestBody IssueDto dto) {
+        Optional<Issue> issueOptional = issueService.getIssue(dto.id());
+        if (issueOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("Game could not be found");
+        }
+        Issue issue = issueOptional.get();
+
+        // TODO bad update
+        if (dto.status() != null) {
+            issue.setStatus(dto.status());
+        }
+
+        Issue updatedIssue = issueService.updateIssue(issue);
+        LOGGER.info("Updated issue: {}", updatedIssue);
+        return ResponseEntity.ok(updatedIssue);
+    }
 }

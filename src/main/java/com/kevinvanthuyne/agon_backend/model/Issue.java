@@ -88,8 +88,8 @@ public class Issue {
     public String toString() {
         return "Issue{" +
                 "id=" + id +
-                ", game=" + game +
-                ", user=" + user +
+                ", game=" + game.getName() +
+                ", user=" + user.getName() +
                 ", description='" + description + '\'' +
                 ", timestamp=" + timestamp +
                 ", status=" + status +
