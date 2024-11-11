@@ -16,7 +16,7 @@ public class IssueService {
     }
 
     public List<Issue> getAllIssues() {
-        return issueDao.findAllBy();
+        return issueDao.findAllByOrderById();
     }
 
     public Issue addIssue(Issue issue) {

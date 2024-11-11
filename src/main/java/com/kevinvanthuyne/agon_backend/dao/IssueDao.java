@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IssueDao extends CrudRepository<Issue, Long> {
-    List<Issue> findAllBy();
+    List<Issue> findAllByOrderById();
 }
