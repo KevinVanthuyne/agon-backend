@@ -5,7 +5,7 @@ package com.kevinvanthuyne.agon_backend.model;
  */
 public enum GameStatus {
     UNKNOWN,
-    LIVE,
+    ON_LOCATION,
     IN_STORAGE,
     BROKEN,
     UNDER_REPAIR
