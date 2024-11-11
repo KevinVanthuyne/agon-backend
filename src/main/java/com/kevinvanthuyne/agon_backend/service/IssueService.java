@@ -30,4 +30,8 @@ public class IssueService {
     public Issue updateIssue(Issue issue) {
         return issueDao.save(issue);
     }
+
+    public void deleteIssue(Long id) {
+        issueDao.deleteById(id);
+    }
 }

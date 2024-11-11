@@ -76,4 +76,15 @@ public class IssueController {
         LOGGER.info("Updated issue: {}", updatedIssue);
         return ResponseEntity.ok(updatedIssue);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteIssue(@PathVariable Long id) {
+        Optional<Issue> issueOptional = issueService.getIssue(id);
+        if (issueOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("Issue could not be found");
+        }
+        issueService.deleteIssue(issueOptional.get().getId());
+        LOGGER.info("Deleted issue: {}", issueOptional.get());
+        return ResponseEntity.ok().build();
+    }
 }
