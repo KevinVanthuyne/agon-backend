@@ -28,13 +28,13 @@ With Compose, all applications will be run at the same time from Docker images.
 
 Build the app with Maven (with skip tests):
 
-```
+```shell
 maven clean package
 ```
 
 Build the Docker image:
 
-```
+```shell
 docker build -t kevinvt/agon-backend .
 ```
 
@@ -56,6 +56,6 @@ SQL file into the database.
 
 Push the image to Docker Hub:
 
-```
+```shell
 docker push kevinvt/agon-backend:latest
 ```
