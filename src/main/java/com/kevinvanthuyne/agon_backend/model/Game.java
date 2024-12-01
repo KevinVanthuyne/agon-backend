@@ -21,6 +21,12 @@ public class Game implements Serializable {
     private String description;
 
     /**
+     * A description of how to play the game.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String howToPlay;
+
+    /**
      * Description of how the game got into the collection, where it's from, if there was any work done on it, ...
      */
     @Column(columnDefinition = "TEXT")
@@ -36,6 +42,7 @@ public class Game implements Serializable {
                 GameStyle gameStyle,
                 String description,
                 GameCategory category,
+                String howToPlay,
                 String collectionHistory,
                 GameStatus status,
                 int year) {
@@ -44,17 +51,18 @@ public class Game implements Serializable {
         this.gameStyle = gameStyle;
         this.description = description;
         this.category = category;
+        this.howToPlay = howToPlay;
         this.collectionHistory = collectionHistory;
         this.status = status;
         this.year = year;
     }
 
     public Game(String name, String description, GameCategory category) {
-        this(-1, name, null, description, category, null, GameStatus.UNKNOWN, 0);
+        this(-1, name, null, description, category, null, null, GameStatus.UNKNOWN, 0);
     }
 
     public Game(int id, String name) {
-        this(id, name, null, null, null, null, GameStatus.UNKNOWN, 0);
+        this(id, name, null, null, null, null, null, GameStatus.UNKNOWN, 0);
     }
 
     public Game(String name) {
@@ -103,6 +111,18 @@ public class Game implements Serializable {
 
     public void setCategory(GameCategory category) {
         this.category = category;
+    }
+
+    public String getHowToPlay() {
+        return howToPlay;
+    }
+
+    public void setHowToPlay(String howToPlay) {
+        this.howToPlay = howToPlay;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getCollectionHistory() {

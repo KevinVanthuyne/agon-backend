@@ -64,6 +64,9 @@ public class GameController {
         if (gameDto.collectionHistory() != null) {
             game.setCollectionHistory(gameDto.collectionHistory());
         }
+        if (gameDto.howToPlay() != null) {
+            game.setHowToPlay(gameDto.howToPlay());
+        }
         if (gameDto.year() != null) {
             game.setYear(gameDto.year());
         }
